@@ -23,7 +23,7 @@ module.exports = {
       host: process.env.S_HOST,
       user: process.env.S_USER,
       password: process.env.S_PASS,
-      database: process.env.PG_DB
+      database: process.env.S_DB
     },
     pool: {
       min: 2,
