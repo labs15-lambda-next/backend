@@ -1,4 +1,5 @@
-require('dotenv').config()
+const dotenv = require('dotenv')
+dotenv.load()
 
 module.exports = {
   development: {
@@ -19,7 +20,12 @@ module.exports = {
   },
   production: {
     client: 'pg',
-    connection: process.env.PG_URI,
+    connection: {
+      host: process.env.PG_HOST,
+      user: process.env.PG_USER,
+      password: process.env.PG_PASS,
+      db: process.env.PG_DB
+    },
     pool: {
       min: 2,
       max: 10
