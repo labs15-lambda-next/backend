@@ -1,5 +1,5 @@
 require('dotenv').config({ path: './.env' });
-
+// fix seeds
 module.exports = {
   development: {
     client: 'pg',
