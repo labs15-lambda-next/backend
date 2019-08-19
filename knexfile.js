@@ -19,7 +19,12 @@ module.exports = {
   },
   staging: {
     client: 'pg',
-    connection: process.env.STAGING,
+    connection: {
+      host: process.env.S_HOST,
+      user: process.env.S_USER,
+      password: process.env.S_PASS,
+      database: process.env.PG_DB
+    },
     pool: {
       min: 2,
       max: 10
