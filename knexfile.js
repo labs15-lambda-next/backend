@@ -17,6 +17,20 @@ module.exports = {
       directory: './data/seeds'
     }
   },
+  staging: {
+    client: 'pg',
+    connection: process.env.STAGING,
+    pool: {
+      min: 2,
+      max: 10
+    },
+    migrations: {
+      directory: './data/migrations'
+    },
+    seeds: {
+      directory: './data/migrations'
+    }
+  },
   production: {
     client: 'pg',
     connection: {
