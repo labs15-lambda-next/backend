@@ -1,3 +1,4 @@
+require('dotenv').config({ path: './.env' })
 const express = require('express')
 const cors = require('cors')
 const helmet = require('helmet')
@@ -28,7 +29,8 @@ server.get('/users', async (req, res) => {
   }
 })
 
-server.listen(process.env.PORT || 5000, () => {
-  const serverRunMsg = 'Server is active and listening on http://127.0.0.1:5000'
+const port = process.env.PORT || 5000
+server.listen(port, () => {
+  const serverRunMsg = `Server is active and listening on http://127.0.0.1:${port}`
   console.log(chalk.green(serverRunMsg))
 })
