@@ -9,11 +9,22 @@ server.use(express.json())
 server.use(helmet())
 server.use(cors())
 
+const db = require('./data/dbConfig')
+
 server.get('/', (req, res) => {
   try {
     res.status(200).json({ message: 'Root endpoint is functional.' })
   } catch (err) {
     res.status(500).json({ errorMessage: err.message })
+  }
+})
+
+server.get('/users', async (req, res) => {
+  try {
+    const users = await db('users')
+    res.status(200).json(users)
+  } catch (err) {
+    res.status(500).json({ error: err.message })
   }
 })
 
