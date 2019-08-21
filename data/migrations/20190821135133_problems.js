@@ -1,3 +1,4 @@
+
 exports.up = function (knex) {
   return knex.schema.createTable('problems', (tbl) => {
     tbl.increments();
@@ -11,7 +12,7 @@ exports.up = function (knex) {
       .string('problem_category') // if dropdown is it still a string?
       .notNullable();
     tbl
-      .date('date') // for dates is int correct?
+      .integer('date') // for dates is int correct?
       .notNullable();
     tbl
       .string('created_by');
@@ -25,6 +26,7 @@ exports.up = function (knex) {
       .onUpdate('RESTRICT');
   });
 };
+
 exports.down = function (knex) {
   return knex.schema.dropTableIfExists('problems');
 };
