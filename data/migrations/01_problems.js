@@ -8,10 +8,10 @@ exports.up = function (knex) {
       .string('problem_description')
       .notNullable();
     tbl
-      .string('problem_category') // if dropdown is it still a string?
+      .string('problem_category')
       .notNullable();
     tbl
-      .date('date') // for dates is int correct?
+      .date('date_created')
       .notNullable();
     tbl
       .string('created_by');
