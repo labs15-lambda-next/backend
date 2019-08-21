@@ -10,9 +10,9 @@ exports.up = function (knex) {
       .onUpdate('CASCADE');
     tbl.string('full_name', 128).notNullable();
     tbl
-       .string('email', 256)
-       .notNullable()
-       .unique();
+      .string('email', 256)
+      .notNullable()
+      .unique();
   });
 };
 
