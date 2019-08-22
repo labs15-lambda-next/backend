@@ -8,12 +8,13 @@ module.exports = {
     deleteProblem
 };
 
-function getProblems() {   
-      return db('problems').select('id','problem_title', 'problem_description', 'problem_category', 'date_created', 'created_by') 
+function getProblems() {
+      return db('problems').select('id','problem_title', 'problem_description', 'problem_category', 'date_created', 'created_by')
   };
 
 function getProblemsById(id) {
-    return db('problems').where(id);
+    return db('problems').where({ id })
+    .first();
 }
 
  async function insertProblem(problem) {
