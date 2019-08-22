@@ -19,6 +19,7 @@ module.exports = {
   },
   staging: {
     client: 'pg',
+    // eslint-disable-next-line linebreak-style
     connection: {
       host: process.env.S_HOST,
       user: process.env.S_USER,
