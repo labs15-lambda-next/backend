@@ -8,11 +8,11 @@ exports.up = function (knex) {
       .inTable('problems')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
-    // tbl.string('full_name', 128).notNullable();
-    // tbl
-    //   .string('email', 256)
-    //   .notNullable()
-    //   .unique();
+    tbl.string('full_name', 128).notNullable();
+    tbl
+      .string('email', 256)
+      .notNullable()
+      .unique();
   });
 };
 
