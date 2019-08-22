@@ -21,8 +21,8 @@ exports.up = function (knex) {
       .notNullable()
       .references('id')
       .inTable('admin')
-      .onDelete('RESTRICT')
-      .onUpdate('RESTRICT');
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE');
   });
 };
 exports.down = function (knex) {
