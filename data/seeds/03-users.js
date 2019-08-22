@@ -1,8 +1,7 @@
 /* eslint-disable implicit-arrow-linebreak */
 exports.seed = function (knex) {
   // Deletes ALL existing entries
-  return knex('users')
-    .truncate()
+  return knex('users').del()
     .then(() =>
       // Inserts seed entries
       knex('users').insert([

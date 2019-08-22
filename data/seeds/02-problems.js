@@ -1,13 +1,11 @@
-
 exports.seed = function (knex) {
   // Deletes ALL existing entries
-  return knex('problems')
-    .truncate()
+  return knex('problems').del()
     .then(() =>
     // Inserts seed entries
       knex('problems').insert([
         {
-          admin_id: 1, problem_title: 'Ieed to keep track of my medical stats', problem_description: '', problem_category: '', date_created: '', created_by: ''
+          admin_id: 1, problem_title: 'Ieed to keep track of my medical stats', problem_description: '', problem_category: '', date_created: Date, created_by: ''
         },
         {
           admin_id: 2, problem_title: '', problem_description: '', problem_category: '', date_created: '', created_by: ''
