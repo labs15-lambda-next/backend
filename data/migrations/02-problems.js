@@ -11,7 +11,7 @@ exports.up = function (knex) {
       .string('problem_category')
       .notNullable();
     tbl
-      .date('date_created')
+      .string('date_created')
       .notNullable();
     tbl
       .string('created_by');
@@ -21,8 +21,8 @@ exports.up = function (knex) {
       .notNullable()
       .references('id')
       .inTable('admin')
-      .onDelete('CASCADE')
-      .onUpdate('CASCADE');
+      .onDelete('RESTRICT')
+      .onUpdate('RESTRICT');
   });
 };
 exports.down = function (knex) {
