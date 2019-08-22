@@ -1,9 +1,9 @@
 const express = require('express');
 const db = require('../models/problem-model');
 
-const problemRouter = express.Router();
+const router = express.Router();
 
-problemRouter.post('/', (req, res) => {
+router.post('/', (req, res) => {
   const {
     problem_title, problem_description, problem_category, date_created, created_by, admin_id
   } = req.body;
@@ -30,7 +30,7 @@ problemRouter.post('/', (req, res) => {
   }
 });
 
-problemRouter.get('/', (req, res) => {
+router.get('/', (req, res) => {
   db
     .getProblems()
     .then((problem) => {
@@ -42,16 +42,25 @@ problemRouter.get('/', (req, res) => {
     });
 });
 
-problemRouter.get('/:id', (req, res) => {
-  db
-    .getProblemsById(req.params.id)
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({ message: 'Error getting problem by ID' });
-    });
+router.get('/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const problem = await db.getProblemsById(id);
+    if (problem) {
+      res.status(200).json(problem);
+    } else {
+      res
+        .status(404)
+        .json({ message: 'Problem with specified ID does not exist.' });
+    }
+  } catch (error) {
+    res
+      .status(404)
+      .json({ message: `The reason you're getting an error: ${error}` });
+  }
 });
 
-problemRouter.put('/:id', (req, res) => {
+router.put('/:id', (req, res) => {
   const { id } = req.params;
   const { problem_title, problem_description, problem_category } = req.body;
   db
@@ -61,7 +70,7 @@ problemRouter.put('/:id', (req, res) => {
     });
 });
 
-problemRouter.delete('/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
   const { id } = req.params;
   db
     .deleteProblem(id)
@@ -70,4 +79,4 @@ problemRouter.delete('/:id', (req, res) => {
     });
 });
 
-module.exports = problemRouter;
+module.exports = router;
