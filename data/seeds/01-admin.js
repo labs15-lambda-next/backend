@@ -6,13 +6,13 @@ exports.seed = function (knex) {
       // Inserts seed entries
       knex('admin').insert([
         {
-          id: 1, username: 'testUser1', password: 'test', email: 'testUser1@email.com'
+          id: 1, username: 'Admin1', password: 'test', email: 'admin1@email.com'
         },
         {
-          id: 2, username: 'testUser2', password: 'test', email: 'testUser2@email.com'
+          id: 2, username: 'Admin2', password: 'test', email: 'admin2@email.com'
         },
         {
-          id: 3, username: 'testUser3', password: 'test', email: 'testUser3@email.com'
+          id: 3, username: 'Admin3', password: 'test', email: 'admin3@email.com'
         }
       ]));
 };
