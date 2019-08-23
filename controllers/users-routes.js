@@ -3,7 +3,7 @@ const router = require('express').Router();
 const Users = require('../models/users-model');
 
 // sned msg
-// const sendMsg = require('../config/sendgrid');
+const sendMessage = require('../config/sendgrid');
 
 router.get('/', async (req, res) => {
   try {
@@ -28,7 +28,8 @@ router.post('/signup', async (req, res) => {
       .then((user) => {
         res.status(200).json({
           message: `new user signed up: ${email}`,
-          user: req.body
+          user: req.body,
+          sendMessage
         });
       })
       .catch((error) => {
