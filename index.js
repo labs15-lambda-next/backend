@@ -5,13 +5,18 @@ const helmet = require('helmet');
 const chalk = require('chalk').default;
 
 const server = express();
-
+// middleware
 server.use(express.json());
 server.use(helmet());
 server.use(cors());
 
-const db = require('./data/dbConfig');
 
+// endpoints
+const usersRouter = require('./controllers/users-routes');
+const problemRouter = require('./controllers/problemRoutes');
+
+server.use('/users', usersRouter);
+server.use('/problems', problemRouter);
 server.get('/', (req, res) => {
   try {
     res.status(200).json({ message: 'Root endpoint is functional.' });
@@ -20,14 +25,6 @@ server.get('/', (req, res) => {
   }
 });
 
-server.get('/users', async (req, res) => {
-  try {
-    const users = await db('users');
-    res.status(200).json(users);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
 
 const port = process.env.PORT || 5000;
 server.listen(port, () => {
