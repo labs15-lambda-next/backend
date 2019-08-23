@@ -11,14 +11,8 @@
   },
   "lint-staged": {
     "**/*.js": [
-      "eslint --fix",
       "git add"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "dependencies": {
     "@sendgrid/mail": "^6.4.0",
