@@ -1,6 +1,6 @@
 const router = require('express').Router();
 // Model
-const Users = require('../data/dbConfig');
+const Users = require('../models/users-model');
 
 
 router.get('/', async (req, res) => {
@@ -13,20 +13,20 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/signup', async (req, res) => {
-  const { full_name, email } = req.body;
+  const { problem_id, full_name, email } = req.body;
 
-  if (!full_name || !email) {
+  if (!problem_id, !full_name || !email) {
     res.status(404).json({ message: 'Enter your name and email' });
   } else {
-    Users.insert(req.body)
+    Users.addUser(req.body)
       .then((user) => {
         res.status(200).json({
-          message: `new user signed up: ${user}`,
+          message: `new user signed up: ${email}`,
           user: req.body
         });
       })
       .catch((error) => {
-        res.status(500).json({ message: `error 500 hundo, ${error}` });
+        res.status(500).json({ message: `error:, ${error}` });
       });
   }
 });
