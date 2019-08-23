@@ -2,10 +2,10 @@ const sgMail = require('@sendgrid/mail');
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const msg = {
-  to: 'Labs15teamnext@gmail.com',
-  from: 'alanperez9six@gmail.com',
-  subject: 'Sending with Twilio SendGrid is Fun',
-  text: 'and easy to do anywhere, even with Node.js',
-  html: '<strong>and easy to do anywhere, even with Node.js </strong>',
+  to: '',
+  from: 'noreply@lambdaschoolnext.com',
+  subject: 'Welcome to Lambaschool Next',
+  text: 'Thank you for signing up! Our staff will reach out when the research begins',
+  html: '<strong>Thank you, Lambda Next Team</strong>',
 };
 sgMail.send(msg);
