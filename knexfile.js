@@ -1,4 +1,4 @@
-require('dotenv').config({ path: './.env' });
+require('dotenv').config({ path: './.env' })
 // fix seeds
 module.exports = {
   development: {
@@ -20,6 +20,7 @@ module.exports = {
   staging: {
     client: 'pg',
     // eslint-disable-next-line linebreak-style
+    // deploy stage
     connection: {
       host: process.env.S_HOST,
       user: process.env.S_USER,
@@ -56,4 +57,4 @@ module.exports = {
       directory: './data/seeds'
     }
   }
-};
+}
