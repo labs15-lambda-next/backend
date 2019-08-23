@@ -2,6 +2,8 @@ const router = require('express').Router();
 // Model
 const Users = require('../models/users-model');
 
+// sned msg
+// const sendMsg = require('../config/sendgrid');
 
 router.get('/', async (req, res) => {
   try {
@@ -12,6 +14,10 @@ router.get('/', async (req, res) => {
   }
 });
 
+/**
+ * Description: User will sign up for a problem
+ *
+ */
 router.post('/signup', async (req, res) => {
   const { problem_id, full_name, email } = req.body;
 
