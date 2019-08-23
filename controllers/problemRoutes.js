@@ -7,7 +7,7 @@ router.post('/', (req, res) => {
   const {
     problem_title, problem_description, problem_category, date_created, created_by, admin_id
   } = req.body;
-  if (!problem_title || !problem_category) {
+  if (!admin_id || !problem_title || !problem_description || !problem_category || !date_created) {
     res.status(400).json({ errorMessage: 'You are missing either a category or a problem title' });
   } else {
     db
@@ -21,11 +21,10 @@ router.post('/', (req, res) => {
       })
 
       .then((id) => {
-        console.log('testing post req');
-        res.json(id);
+        res.status(400).json({ message: 'Problem has been posted' });
       })
       .catch((err) => {
-        console.log(err);
+        res.status(500).json({ error: `${err}` });
       });
   }
 });
