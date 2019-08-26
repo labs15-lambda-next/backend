@@ -15,13 +15,6 @@ exports.up = function (knex) {
       .notNullable();
     tbl
       .string('created_by');
-    tbl
-      .integer('admin_id')
-      .unsigned()
-      .references('id')
-      .inTable('admin')
-      .onDelete('RESTRICT')
-      .onUpdate('RESTRICT');
   });
 };
 exports.down = function (knex) {
