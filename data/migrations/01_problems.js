@@ -18,7 +18,6 @@ exports.up = function (knex) {
     tbl
       .integer('admin_id')
       .unsigned()
-      .notNullable()
       .references('id')
       .inTable('admin')
       .onDelete('RESTRICT')
