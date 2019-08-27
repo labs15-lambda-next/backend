@@ -7,7 +7,7 @@ const sendMessage = require('../config/sendgrid');
 
 router.get('/', async (req, res) => {
   try {
-    const users = await Users('users');
+    const users = await Users.getUsers('users');
     res.status(200).json(users);
   } catch (err) {
     res.status(500).json({ error: err.message });

@@ -5,10 +5,14 @@ const router = express.Router();
 
 router.post('/', (req, res) => {
   const {
-    problem_title, problem_description, problem_category, date_created, created_by, admin_id
+    problem_title,
+    problem_description,
+    problem_category,
+    date_created,
+    created_by
   } = req.body;
-  if (!problem_title || !problem_category) {
-    res.status(400).json({ errorMessage: 'You are missing either a category or a problem title' });
+  if (!problem_title || !problem_description || !problem_category || !date_created) {
+    res.status(400).json({ errorMessage: 'Make sure all the required fields are included.' });
   } else {
     db
       .insertProblem({
@@ -16,16 +20,14 @@ router.post('/', (req, res) => {
         problem_description,
         problem_category,
         date_created,
-        created_by,
-        admin_id
+        created_by
       })
 
       .then((id) => {
-        console.log('testing post req');
-        res.json(id);
+        res.status(400).json({ message: 'Problem has been posted' });
       })
       .catch((err) => {
-        console.log(err);
+        res.status(500).json({ error: `${err}` });
       });
   }
 });

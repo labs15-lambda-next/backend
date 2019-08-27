@@ -9,7 +9,14 @@ module.exports = {
 };
 
 function getProblems() {
-  return db('problems').select('id', 'problem_title', 'problem_description', 'problem_category', 'date_created', 'created_by');
+  return db('problems').select(
+    'id',
+    'problem_title',
+    'problem_description',
+    'problem_category',
+    'date_created',
+    'created_by'
+  );
 }
 
 function getProblemsById(id) {
