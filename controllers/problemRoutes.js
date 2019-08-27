@@ -24,7 +24,7 @@ router.post('/', (req, res) => {
       })
 
       .then((id) => {
-        res.status(400).json({ message: 'Problem has been posted' });
+        res.status(200).json({ message: 'Problem has been posted' });
       })
       .catch((err) => {
         res.status(500).json({ error: `${err}` });
