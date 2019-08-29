@@ -5,14 +5,14 @@ const helmet = require('helmet');
 const chalk = require('chalk').default;
 
 const server = express();
-const corsOptions = {
-  origin: process.env.FRONTEND_URL,
-  credentials: true,
-};
 // middleware
+// const corsOptions = {
+//   origin: process.env.FRONTEND_URL,
+//   credentials: true,
+// };
 server.use(express.json());
 server.use(helmet());
-server.use(cors(corsOptions));
+server.use(cors());
 
 // endpoints
 const usersRouter = require('./controllers/users-routes');
