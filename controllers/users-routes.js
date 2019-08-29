@@ -28,8 +28,7 @@ router.post('/signup', async (req, res) => {
       .then((user) => {
         res.status(200).json({
           message: `new user signed up: ${email}`,
-          user: req.body,
-          sendMessage
+          user: req.body
         });
       })
       .catch((error) => {
