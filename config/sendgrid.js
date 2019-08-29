@@ -9,7 +9,7 @@ sgMail.setApiKey('SG.w15vcf3jTfG7FIbcciru0A.H7R4CJgdTj5VxhK1jpGXVeHDF-SZsOXU0bh5
 const sendEmails = async () => {
   const emails = await userEmails.getUserEmail('users');
 
-  emails.forEach(user => {
+  emails.map(user => {
     const msg = {
       to: 'labs15teamnext@gmail.com',
       from: 'noreply@labs15teamnext.com',
