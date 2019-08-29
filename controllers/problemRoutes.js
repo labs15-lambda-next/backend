@@ -1,5 +1,6 @@
 const express = require('express');
 const db = require('../models/problem-model');
+const Users = require('../models/users-model');
 
 const router = express.Router();
 
@@ -61,7 +62,25 @@ router.get('/:id', async (req, res) => {
       .json({ message: `The reason you're getting an error: ${error}` });
   }
 });
+// post id
+router.post('/:id/signup', async (req, res) => {
+  const { problem_id,full_name, email } = req.body;
 
+  if (!problem_id || !full_name || !email) {
+    res.status(404).json({ message: 'Enter your name and email' });
+  } else {
+    Users.addUser(req.body)
+      .then((user) => {
+        res.status(200).json({
+          message: `new user signed up: ${email}`,
+          user: req.body
+        });
+      })
+      .catch((error) => {
+        res.status(500).json({ message: `error:, ${error}` });
+      });
+  }
+});
 router.put('/:id', (req, res) => {
   const { id } = req.params;
   const { problem_title, problem_description, problem_category } = req.body;
