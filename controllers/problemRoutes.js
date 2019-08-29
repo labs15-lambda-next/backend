@@ -1,5 +1,6 @@
 const express = require('express');
 const db = require('../models/problem-model');
+const Users = require('../models/users-model');
 
 const router = express.Router();
 
@@ -63,9 +64,9 @@ router.get('/:id', async (req, res) => {
 });
 // post id
 router.post('/:id/signup', async (req, res) => {
-  const { full_name, email } = req.body;
+  const { problem_id,full_name, email } = req.body;
 
-  if (!full_name || !email) {
+  if (!problem_id || !full_name || !email) {
     res.status(404).json({ message: 'Enter your name and email' });
   } else {
     Users.addUser(req.body)
