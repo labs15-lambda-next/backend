@@ -12,7 +12,6 @@ exports.up = function (knex) {
     tbl
       .string('email', 256)
       .notNullable()
-      .unique();
   });
 };
 
