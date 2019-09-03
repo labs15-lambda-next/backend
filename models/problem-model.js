@@ -5,7 +5,9 @@ module.exports = {
   getProblemsById,
   insertProblem,
   updateProblem,
-  deleteProblem
+  deleteProblem,
+  rateProblem,
+  updateRating
 };
 
 function getProblems() {
@@ -40,4 +42,16 @@ function deleteProblem(id) {
   return db('problems')
     .where('id', id)
     .del();
+}
+
+function rateProblem(id) {
+  return db('problems')
+    .where({ id })
+    .first();
+}
+
+function updateRating(id, changes) {
+  return db('problems')
+    .where({ id })
+    .update(changes);
 }
