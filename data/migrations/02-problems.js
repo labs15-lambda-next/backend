@@ -15,6 +15,10 @@ exports.up = function (knex) {
       .notNullable();
     tbl
       .string('created_by');
+
+    tbl.float('rating', 8);
+
+    tbl.integer('numOfRatings', 8);
   });
 };
 exports.down = function (knex) {

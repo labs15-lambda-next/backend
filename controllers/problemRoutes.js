@@ -1,7 +1,7 @@
 const express = require('express');
 const db = require('../models/problem-model');
 const Users = require('../models/users-model');
-
+const dbConf = require('../data/dbConfig')
 const router = express.Router();
 
 router.post('/', (req, res) => {
@@ -64,7 +64,7 @@ router.get('/:id', async (req, res) => {
 });
 // post id
 router.post('/:id/signup', async (req, res) => {
-  const { problem_id,full_name, email } = req.body;
+  const { problem_id, full_name, email } = req.body;
 
   if (!problem_id || !full_name || !email) {
     res.status(404).json({ message: 'Enter your name and email' });
@@ -89,6 +89,30 @@ router.put('/:id', (req, res) => {
     .then((problem) => {
       res.json(problem);
     });
+});
+
+router.put('/:id/rate', (req, res) => {
+  const {id} = req.params;
+
+  dbConf('problems')
+      .where({id})
+      .first()
+      .then(problem => {
+          let newRatingFirst = problem.numOfRatings * problem.rating + req.body.rating;
+          problem.numOfRatings = problem.numOfRatings + 1;
+          let finalRating = newRatingFirst/problem.numOfRatings;
+
+          problem.rating = Math.round(finalRating * 100) / 100;
+
+          dbConf('problems')
+              .update(problem)
+              .where({id})
+              .then(finalUser => {
+                  res.status(201).json(finalUser);
+              })
+              .catch(err => res.status(500).json({message: 'something went wrong while rating this problem.'}));
+      })
+      .catch(err => res.status(404).json({message: "unable to find that problem."}));
 });
 
 router.delete('/:id', (req, res) => {
