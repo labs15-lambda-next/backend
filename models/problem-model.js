@@ -45,13 +45,11 @@ function deleteProblem(id) {
 }
 
 function rateProblem(id) {
-  return db('problems')
-    .where({ id })
-    .first();
+  return getProblemsById()
 }
 
-function updateRating(id, changes) {
+function updateRating(id, user) {
   return db('problems')
     .where({ id })
-    .update(changes);
+    .update(user)
 }
