@@ -64,7 +64,7 @@ router.get('/:id', async (req, res) => {
 });
 // post id
 router.post('/:id/signup', async (req, res) => {
-  const { problem_id,full_name, email } = req.body;
+  const { problem_id, full_name, email } = req.body;
 
   if (!problem_id || !full_name || !email) {
     res.status(404).json({ message: 'Enter your name and email' });
@@ -89,6 +89,25 @@ router.put('/:id', (req, res) => {
     .then((problem) => {
       res.json(problem);
     });
+});
+
+router.put('/:id/rate', (req, res) => {
+  const { id } = req.params;
+
+  db.getProblemsById(id).then((problem) => {
+    const initNewRating = problem.numOfRating * problem.rating + req.body.rating;
+    problem.numOfRating += 1;
+    const finalRating = initNewRating / problem.numOfRating;
+    problem.rating = Math.round(finalRating * 100) / 100;
+
+    db.updateRating(id).then((finalProblemRating) => {
+      res.status(201).json(finalProblemRating);
+    }).catch((error) => {
+      res.status(500).json({ message: 'Unable to rate this problem' });
+    });
+  }).catch((error) => {
+    res.status(404).json({ message: 'unable to find the problem' });
+  });
 });
 
 router.delete('/:id', (req, res) => {
