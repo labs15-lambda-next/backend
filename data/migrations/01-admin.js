@@ -9,6 +9,7 @@ exports.up = function (knex) {
     tbl
       .string('password', 128)
       .notNullable();
+    tbl.string('google_id', 255);
   });
 };
 
