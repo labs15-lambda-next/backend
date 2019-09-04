@@ -1,7 +1,7 @@
 const express = require('express');
-const db = require('../../models/problem-model');
-const Users = require('../../models/users-model');
-const dbConf = require('../../data/dbConfig')
+const db = require('../models/problem-model');
+const Users = require('../models/users-model');
+const dbConf = require('../data/dbConfig');
 
 const router = express.Router();
 
@@ -93,27 +93,27 @@ router.put('/:id', (req, res) => {
 });
 
 router.put('/:id/rate', (req, res) => {
-  const {id} = req.params;
+  const { id } = req.params;
 
   dbConf('problems')
-      .where({id})
-      .first()
-      .then(problem => {
-          let newRatingFirst = problem.numOfRatings * problem.rating + req.body.rating;
-          problem.numOfRatings = problem.numOfRatings + 1;
-          let finalRating = newRatingFirst/problem.numOfRatings;
+    .where({ id })
+    .first()
+    .then((problem) => {
+      const newRatingFirst = problem.numOfRatings * problem.rating + req.body.rating;
+      problem.numOfRatings += 1;
+      const finalRating = newRatingFirst / problem.numOfRatings;
 
-          problem.rating = Math.round(finalRating * 100) / 100;
+      problem.rating = Math.round(finalRating * 100) / 100;
 
-          dbConf('problems')
-              .update(problem)
-              .where({id})
-              .then(finalUser => {
-                  res.status(201).json(finalUser);
-              })
-              .catch(err => res.status(500).json({message: 'something went wrong while rating this problem.'}));
-      })
-      .catch(err => res.status(404).json({message: "unable to find that problem."}));
+      dbConf('problems')
+        .update(problem)
+        .where({ id })
+        .then((finalUser) => {
+          res.status(201).json(finalUser);
+        })
+        .catch((err) => res.status(500).json({ message: 'something went wrong while rating this problem.' }));
+    })
+    .catch((err) => res.status(404).json({ message: 'unable to find that problem.' }));
 });
 
 router.delete('/:id', (req, res) => {
