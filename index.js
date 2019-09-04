@@ -3,6 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const chalk = require('chalk').default;
+const passport = require('passport');
+const passportSetup = require('./controllers/Authentication/passport-setup');
 
 const server = express();
 // middleware
@@ -13,13 +15,17 @@ const server = express();
 server.use(express.json());
 server.use(helmet());
 server.use(cors());
-
+// initialize passport
+server.use(passport.initialize());
+server.use(passport.session());
 // endpoints
-const usersRouter = require('./controllers/users-routes');
-const problemRouter = require('./controllers/problemRoutes');
+const usersRouter = require('./controllers/routes/users-routes');
+const problemRouter = require('./controllers/routes/problemRoutes');
+const authRouter = require('./controllers/Authentication/Authentication');
 
 server.use('/users', usersRouter);
 server.use('/problems', problemRouter);
+server.use('/auth', authRouter);
 server.get('/', (req, res) => {
   try {
     res.status(200).json({ message: 'Root endpoint is functional.' });

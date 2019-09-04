@@ -5,7 +5,9 @@ module.exports = {
   getAdminById,
   addAdmin,
   deleteAdmin,
-  updateAdmin
+  updateAdmin,
+  getByEmail,
+  add
 };
 
 
@@ -28,4 +30,13 @@ function deleteAdmin(id) {
   return db('admin')
     .where('id', id)
     .del();
+}
+
+function getByEmail(filter) {
+  return db('admin')
+    .where('email', '=', filter)
+    .first();
+}
+function add(admin) {
+  return db('admin').insert(admin, 'id');
 }

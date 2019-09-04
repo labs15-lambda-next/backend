@@ -1,9 +1,9 @@
 const router = require('express').Router();
 // Model
-const Users = require('../models/users-model');
+const Users = require('../../models/users-model');
 
 // sned msg
-const sendMessage = require('../config/sendgrid');
+const sendMessage = require('../../config/sendgrid');
 
 router.get('/', async (req, res) => {
   try {
