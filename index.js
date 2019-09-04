@@ -19,8 +19,8 @@ server.use(cors());
 server.use(passport.initialize());
 server.use(passport.session());
 // endpoints
-const usersRouter = require('./controllers/users-routes');
-const problemRouter = require('./controllers/problemRoutes');
+const usersRouter = require('./controllers/routes/users-routes');
+const problemRouter = require('./controllers/routes/problemRoutes');
 const authRouter = require('./controllers/Authentication/Authentication');
 
 server.use('/users', usersRouter);
