@@ -42,7 +42,7 @@ router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
   res
     .status(200)
     .cookie('token', res.req.authInfo)
-    .redirect(`${process.env.FRONTEND_URL}/home`);
+    .redirect(`${process.env.FRONTEND_URL}`);
 });
 
 
