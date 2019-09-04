@@ -17,11 +17,9 @@ server.use(cors());
 // endpoints
 const usersRouter = require('./controllers/users-routes');
 const problemRouter = require('./controllers/problemRoutes');
-const authRouter = require('./controllers/Authentication/Authentication');
 
 server.use('/users', usersRouter);
 server.use('/problems', problemRouter);
-server.use('/auth', authRouter);
 server.get('/', (req, res) => {
   try {
     res.status(200).json({ message: 'Root endpoint is functional.' });
