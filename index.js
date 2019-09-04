@@ -3,6 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const chalk = require('chalk').default;
+const passport = require('passport');
+const passportSetup = require('./controllers/Authentication/passport-setup');
 
 const server = express();
 // middleware
@@ -13,7 +15,9 @@ const server = express();
 server.use(express.json());
 server.use(helmet());
 server.use(cors());
-
+// initialize passport
+server.use(passport.initialize());
+server.use(passport.session());
 // endpoints
 const usersRouter = require('./controllers/users-routes');
 const problemRouter = require('./controllers/problemRoutes');
