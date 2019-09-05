@@ -7,7 +7,8 @@ module.exports = {
   updateProblem,
   deleteProblem,
   rateProblem,
-  updateRating
+  updateRating,
+  getPopularProblems
 };
 
 function getProblems() {
@@ -45,11 +46,15 @@ function deleteProblem(id) {
 }
 
 function rateProblem(id) {
-  return getProblemsById()
+  return getProblemsById();
 }
 
 function updateRating(id, user) {
   return db('problems')
     .where({ id })
     .update(user)
+}
+
+function getPopularProblems(rating) {
+  return db('problems').where('rating', rating);
 }

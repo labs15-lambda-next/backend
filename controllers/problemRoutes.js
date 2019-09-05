@@ -1,7 +1,7 @@
 const express = require('express');
 const db = require('../models/problem-model');
 const Users = require('../models/users-model');
-const dbConf = require('../data/dbConfig')
+const dbConf = require('../data/dbConfig');
 
 const router = express.Router();
 
@@ -46,6 +46,33 @@ router.get('/', (req, res) => {
     });
 });
 
+router.get('/popular', async (req, res) => {
+  const rating = req.params;
+  const rate = dbConf('problems').where({ rating });
+  console.log('*** this is RATE ***', rate);
+
+  try {
+    const rated = await db.getPopularProblems(rate);
+    // console.log('** this is RATED **', rated);
+
+    if (rated > 4) {
+      // return -1;
+      res.status(200).json(rated.problem_title);
+    } else if (rated > 3) {
+      // return 1;
+      res.status(200).json(rated.problem_title);
+    } else {
+      // return 0;
+      return null;
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+// PG error : 22P02	INVALID TEXT REPRESENTATION	invalid_text_representation
+
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
@@ -63,6 +90,7 @@ router.get('/:id', async (req, res) => {
       .json({ message: `The reason you're getting an error: ${error}` });
   }
 });
+
 // post id
 router.post('/:id/signup', async (req, res) => {
   const { problem_id, full_name, email } = req.body;
@@ -82,6 +110,7 @@ router.post('/:id/signup', async (req, res) => {
       });
   }
 });
+
 router.put('/:id', (req, res) => {
   const { id } = req.params;
   const { problem_title, problem_description, problem_category } = req.body;
@@ -93,27 +122,27 @@ router.put('/:id', (req, res) => {
 });
 
 router.put('/:id/rate', (req, res) => {
-  const {id} = req.params;
+  const { id } = req.params;
 
   dbConf('problems')
-      .where({id})
-      .first()
-      .then(problem => {
-          let newRatingFirst = problem.numOfRatings * problem.rating + req.body.rating;
-          problem.numOfRatings = problem.numOfRatings + 1;
-          let finalRating = newRatingFirst/problem.numOfRatings;
+    .where({ id })
+    .first()
+    .then((problem) => {
+      const newRatingFirst = problem.numOfRatings * problem.rating + req.body.rating;
+      problem.numOfRatings += 1;
+      const finalRating = newRatingFirst / problem.numOfRatings;
 
-          problem.rating = Math.round(finalRating * 100) / 100;
+      problem.rating = Math.round(finalRating * 100) / 100;
 
-          dbConf('problems')
-              .update(problem)
-              .where({id})
-              .then(finalUser => {
-                  res.status(201).json(finalUser);
-              })
-              .catch(err => res.status(500).json({message: 'something went wrong while rating this problem.'}));
-      })
-      .catch(err => res.status(404).json({message: "unable to find that problem."}));
+      dbConf('problems')
+        .update(problem)
+        .where({ id })
+        .then((finalUser) => {
+          res.status(201).json(finalUser);
+        })
+        .catch((err) => res.status(500).json({ message: 'something went wrong while rating this problem.' }));
+    })
+    .catch((err) => res.status(404).json({ message: 'unable to find that problem.' }));
 });
 
 router.delete('/:id', (req, res) => {
