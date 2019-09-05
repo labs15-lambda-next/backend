@@ -43,5 +43,6 @@ function add(admin) {
 }
 
 function approveProblem(id,problem) {
-  return db('problems').where({id}).update(problem)
+  console.log('admin model prboel', problem)
+  return db('problems').where({id}).update({isApproved:problem})
 }
