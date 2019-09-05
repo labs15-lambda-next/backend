@@ -16,8 +16,10 @@ router.get('/all', async (req, res) => {
 
 router.put('/all/:id', async (req, res) => {
   const { id } = req.params;
-  const isApproved = req.body;
-  Admins.approveProblem(id);
+  const {isApproved} = req.body;
+  Admins.approveProblem(id, isApproved).then((problem) => {
+    
+  })
 });
 
 // decline problem, so you delete it
