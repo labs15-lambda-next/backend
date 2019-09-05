@@ -51,12 +51,10 @@ router.get('/popular', (req, res) => {
   db
     .getPopularProblems()
     .then((rated) => {
-      // sort(rated).desc(r => r.rating)
-      const ratingArr = rated.push((sorted) => {
-        sorted.rating > 3;
+      const ratingArr = rated.filter((sorted) => {
+        return sorted.rating > 3;
       });
       res.json(ratingArr);
-      console.log('this is RATED ***', ratingArr);
     })
     .catch((err) => {
       console.log(err);
