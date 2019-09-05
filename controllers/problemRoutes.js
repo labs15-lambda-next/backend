@@ -1,5 +1,4 @@
 const express = require('express');
-// const sort = require('fast-sort');
 const db = require('../models/problem-model');
 const Users = require('../models/users-model');
 const dbConf = require('../data/dbConfig');
