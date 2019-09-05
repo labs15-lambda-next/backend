@@ -47,6 +47,21 @@ router.get('/', (req, res) => {
     });
 });
 
+router.get('/popular', (req, res) => {
+  db
+    .getPopularProblems()
+    .then((rated) => {
+      const ratingArr = rated.filter((sorted) => {
+        return sorted.rating > 3;
+      });
+      res.json(ratingArr);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: 'Error getting popular problems' });
+    });
+});
+
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   try {
@@ -64,6 +79,7 @@ router.get('/:id', async (req, res) => {
       .json({ message: `The reason you're getting an error: ${error}` });
   }
 });
+
 // post id
 router.post('/:id/signup', async (req, res) => {
   const { problem_id, full_name, email } = req.body;
@@ -83,6 +99,7 @@ router.post('/:id/signup', async (req, res) => {
       });
   }
 });
+
 router.put('/:id', (req, res) => {
   const { id } = req.params;
   const { problem_title, problem_description, problem_category } = req.body;
