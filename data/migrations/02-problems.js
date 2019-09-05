@@ -19,7 +19,7 @@ exports.up = function (knex) {
     tbl.float('rating', 8);
 
     tbl.integer('numOfRatings', 8);
-    tbl.boolean('isApproved').defaultTo(false)
+    tbl.boolean('isApproved')
   });
 };
 exports.down = function (knex) {
