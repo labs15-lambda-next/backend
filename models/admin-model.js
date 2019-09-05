@@ -7,7 +7,8 @@ module.exports = {
   deleteAdmin,
   updateAdmin,
   getByEmail,
-  add
+  add,
+  approveProblem
 };
 
 
@@ -39,4 +40,8 @@ function getByEmail(filter) {
 }
 function add(admin) {
   return db('admin').insert(admin, 'id');
+}
+
+function approveProblem(id,problem) {
+  return db('problems').where({id}).update(problem)
 }
