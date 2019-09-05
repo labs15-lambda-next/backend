@@ -17,7 +17,10 @@ function getProblems() {
     'problem_description',
     'problem_category',
     'date_created',
-    'created_by'
+    'created_by',
+    'rating',
+    'numOfRatings',
+    'isApproved'
   );
 }
 
