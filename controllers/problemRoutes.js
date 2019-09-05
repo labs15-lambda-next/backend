@@ -11,9 +11,10 @@ router.post('/', (req, res) => {
     problem_description,
     problem_category,
     date_created,
-    created_by
+    created_by,
+    isApproved
   } = req.body;
-  if (!problem_title || !problem_description || !problem_category || !date_created) {
+  if (!problem_title || !problem_description || !problem_category || !date_created || !isApproved) {
     res.status(400).json({ errorMessage: 'Make sure all the required fields are included.' });
   } else {
     db
@@ -22,7 +23,8 @@ router.post('/', (req, res) => {
         problem_description,
         problem_category,
         date_created,
-        created_by
+        created_by,
+        isApproved
       })
 
       .then((id) => {
@@ -38,7 +40,8 @@ router.get('/', (req, res) => {
   db
     .getProblems()
     .then((problem) => {
-      res.json(problem);
+      const problemArray = problem.filter(prblm => prblm.isApproved === true)
+      res.json(problemArray);
     })
     .catch((err) => {
       console.log(err);
