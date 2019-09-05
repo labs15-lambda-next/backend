@@ -14,13 +14,34 @@ router.get('/all', async (req, res) => {
   });
 });
 
-router.post('/all/:id', async (req, res) => {
+router.get('/all/:id', async (req,res) => {
+   const { id } = req.params;
+  try {
+    const problem = await Problems.getProblemsById(id);
+    if (problem) {
+      res.status(200).json(problem);
+    } else {
+      res
+        .status(404)
+        .json({ message: 'Problem with specified ID does not exist.' });
+    }
+  } catch (error) {
+    res
+      .status(404)
+      .json({ message: `The reason you're getting an error: ${error}` });
+  }
+})
+router.put('/all/:id', async (req, res) => {
   const { id } = req.params;
   const {isApproved} = req.body;
   Admins.approveProblem(id, isApproved).then((problem) => {
       if (isApproved === true) {
-        return problem
+        res.status(200).json({message: 'problem was approved',problem})
+      } else {
+        res.status(400).json({message: 'problem was removed from public dashboard'})
       }
+  }).catch((error) => {
+    console.log('error', error)
   })
 });
 
