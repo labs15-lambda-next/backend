@@ -11,10 +11,9 @@ router.post('/', (req, res) => {
     problem_description,
     problem_category,
     date_created,
-    created_by,
-    isApproved
+    created_by
   } = req.body;
-  if (!problem_title || !problem_description || !problem_category || !date_created || !isApproved) {
+  if (!problem_title || !problem_description || !problem_category || !date_created) {
     res.status(400).json({ errorMessage: 'Make sure all the required fields are included.' });
   } else {
     db
@@ -23,8 +22,7 @@ router.post('/', (req, res) => {
         problem_description,
         problem_category,
         date_created,
-        created_by,
-        isApproved
+        created_by
       })
 
       .then((id) => {
