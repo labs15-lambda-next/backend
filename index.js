@@ -22,8 +22,10 @@ server.use(passport.session());
 const usersRouter = require('./controllers/users-routes');
 const problemRouter = require('./controllers/problemRoutes');
 const authRouter = require('./controllers/Authentication/Authentication');
+const adminRouter = require('./controllers/admin-routes');
 
 server.use('/users', usersRouter);
+server.use('/admin', adminRouter);
 server.use('/problems', problemRouter);
 server.use('/auth', authRouter);
 server.get('/', (req, res) => {

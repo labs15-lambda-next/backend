@@ -20,7 +20,8 @@ function getProblems() {
     'date_created',
     'created_by',
     'rating',
-    'numOfRatings'
+    'numOfRatings',
+    'isApproved'
   );
 }
 

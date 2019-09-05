@@ -38,7 +38,8 @@ router.get('/', (req, res) => {
   db
     .getProblems()
     .then((problem) => {
-      res.json(problem);
+      const problemArray = problem.filter((prblm) => prblm.isApproved === true);
+      res.json(problemArray);
     })
     .catch((err) => {
       console.log(err);
@@ -133,13 +134,5 @@ router.put('/:id/rate', (req, res) => {
     .catch((err) => res.status(404).json({ message: 'unable to find that problem.' }));
 });
 
-router.delete('/:id', (req, res) => {
-  const { id } = req.params;
-  db
-    .deleteProblem(id)
-    .then((problem) => {
-      res.json(problem);
-    });
-});
 
 module.exports = router;
