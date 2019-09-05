@@ -30,7 +30,7 @@ exports.seed = function (knex) {
           id: 5, problem_title: 'Quick Maths App', problem_description: 'Just need some maths calculated quickly and free', problem_category: 'Science', date_created: '2015', created_by: 'Zeke',rating: 4, numOfRatings: 30, isApproved: false
         },
         {
-          id: 6, problem_title: 'House Watcher App', problem_description: 'Find trust worthy house sitters', problem_category: 'Technology', date_created: '2018', created_by: 'Dan',rating: 3, numOfRatings: 20, isApproved: false
+          id: 6, problem_title: 'House Watcher App', problem_description: 'Find trust worthy house sitters', problem_category: 'Technology', date_created: '2018', created_by: 'Dan',rating: 3, numOfRatings: 20, isApproved: true
         },
       ]));
 };
