@@ -1,4 +1,5 @@
 const express = require('express');
+// const sort = require('fast-sort');
 const db = require('../models/problem-model');
 const Users = require('../models/users-model');
 const dbConf = require('../data/dbConfig');
@@ -46,32 +47,22 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('/popular', async (req, res) => {
-  const rating = req.params;
-  const rate = dbConf('problems').where({ rating });
-  console.log('*** this is RATE ***', rate);
-
-  try {
-    const rated = await db.getPopularProblems(rate);
-    // console.log('** this is RATED **', rated);
-
-    if (rated > 4) {
-      // return -1;
-      res.status(200).json(rated.problem_title);
-    } else if (rated > 3) {
-      // return 1;
-      res.status(200).json(rated.problem_title);
-    } else {
-      // return 0;
-      return null;
-    }
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
-  }
+router.get('/popular', (req, res) => {
+  db
+    .getPopularProblems()
+    .then((rated) => {
+      // sort(rated).desc(r => r.rating)
+      const ratingArr = rated.push((sorted) => {
+        sorted.rating > 3;
+      });
+      res.json(ratingArr);
+      console.log('this is RATED ***', ratingArr);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: 'Error getting popular problems' });
+    });
 });
-
-// PG error : 22P02	INVALID TEXT REPRESENTATION	invalid_text_representation
 
 router.get('/:id', async (req, res) => {
   const { id } = req.params;

@@ -1,4 +1,7 @@
 const db = require('../data/dbConfig');
+// const sort = require('fast-sort');
+
+
 
 module.exports = {
   getProblems,
@@ -18,7 +21,9 @@ function getProblems() {
     'problem_description',
     'problem_category',
     'date_created',
-    'created_by'
+    'created_by',
+    'rating',
+    'numOfRatings'
   );
 }
 
@@ -55,6 +60,6 @@ function updateRating(id, user) {
     .update(user)
 }
 
-function getPopularProblems(rating) {
-  return db('problems').where('rating', rating);
+function getPopularProblems() {
+  return db('problems').select('problem_title', 'rating');
 }
