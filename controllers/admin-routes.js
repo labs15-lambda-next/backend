@@ -14,11 +14,13 @@ router.get('/all', async (req, res) => {
   });
 });
 
-router.put('/all/:id', async (req, res) => {
+router.post('/all/:id', async (req, res) => {
   const { id } = req.params;
   const {isApproved} = req.body;
   Admins.approveProblem(id, isApproved).then((problem) => {
-    
+      if (isApproved === true) {
+        return problem
+      }
   })
 });
 
