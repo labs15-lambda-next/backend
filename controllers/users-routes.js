@@ -31,11 +31,11 @@ router.post('/signup', async (req, res) => {
       .then((user) => {
         const msg = {
           to: req.body.email,
-          from: 'noreply@labs15teamnext.com',
-          subject: 'Sending with Twilio SendGrid is Fun',
+          from: 'noreply@lambdaschoolnext.com',
+          subject: 'welcome!',
           html: 'Thank you for signing up. Youll be notified when the problem is approved.',
         };
-
+        console.log(req.body.email);
         sgMail.send(msg);
         res.status(200).json({
           message: `new user signed up: ${email}`,
