@@ -1,11 +1,15 @@
 const express = require('express');
+const sgMail = require('@sendgrid/mail');
 const db = require('../models/problem-model');
 const Users = require('../models/users-model');
 const dbConf = require('../data/dbConfig');
 
 const router = express.Router();
 
-router.post('/', (req, res) => {
+sgMail.setApiKey(process.env.SEND_KEY);
+
+
+router.post('/', async (req, res) => {
   const {
     problem_title,
     problem_description,
@@ -26,6 +30,13 @@ router.post('/', (req, res) => {
       })
 
       .then((id) => {
+        const msg = {
+          to: req.body.created_by,
+          from: 'noreply@labs15teamnext.com',
+          subject: 'test 1',
+          text: 'test1!',
+        };
+        sgMail.send(msg);
         res.status(200).json({ message: 'Problem has been posted' });
       })
       .catch((err) => {
