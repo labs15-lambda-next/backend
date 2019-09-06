@@ -14,7 +14,8 @@ exports.up = function (knex) {
       .string('date_created')
       .notNullable();
     tbl
-      .string('created_by');
+      .string('created_by')
+      .notNullable();
 
     tbl.float('rating', 8);
 
