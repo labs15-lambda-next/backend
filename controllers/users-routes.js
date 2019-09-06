@@ -3,7 +3,7 @@ const router = require('express').Router();
 const sgMail = require('@sendgrid/mail');
 const Users = require('../models/users-model');
 
-sgMail.setApiKey('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');
+sgMail.setApiKey(process.env.SEND_KEY);
 
 // sned msg
 // const sendMessage = require('../config/sendgrid');
