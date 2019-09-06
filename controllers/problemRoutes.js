@@ -1,9 +1,28 @@
 const express = require('express');
+const sgMail = require('@sendgrid/mail');
 const db = require('../models/problem-model');
 const Users = require('../models/users-model');
 const dbConf = require('../data/dbConfig');
 
 const router = express.Router();
+
+sgMail.setApiKey('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');
+
+const sendEmails = () => {
+  const emails = db.getCreatedBy('problems');
+
+
+  emails.map(() => {
+    const msg = {
+      to: emails,
+      from: 'noreply@labs15teamnext.com',
+      subject: 'Sending with Twilio SendGrid is Fun',
+      text: 'It worked!',
+    };
+
+    sgMail.send(msg);
+  });
+};
 
 router.post('/', (req, res) => {
   const {
@@ -26,7 +45,7 @@ router.post('/', (req, res) => {
       })
 
       .then((id) => {
-        res.status(200).json({ message: 'Problem has been posted' });
+        res.status(200).json({ message: 'Problem has been posted', sendEmails });
       })
       .catch((err) => {
         res.status(500).json({ error: `${err}` });
