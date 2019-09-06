@@ -1,5 +1,6 @@
 require('dotenv').config({ path: './.env' });
 const express = require('express');
+const auth = require('./controllers/Authentication/Authorization');
 const cors = require('cors');
 const helmet = require('helmet');
 const chalk = require('chalk').default;
@@ -25,7 +26,7 @@ const authRouter = require('./controllers/Authentication/Authentication');
 const adminRouter = require('./controllers/admin-routes');
 
 server.use('/users', usersRouter);
-server.use('/admin', adminRouter);
+server.use('/admin', auth.checkAuthentication, auth.checkAuthorization, adminRouter);
 server.use('/problems', problemRouter);
 server.use('/auth', authRouter);
 server.get('/', (req, res) => {
