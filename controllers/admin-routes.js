@@ -33,7 +33,7 @@ router.get('/all/:id', async (req,res) => {
 })
 router.put('/all/:id', async (req, res) => {
   const { id } = req.params;
-  const {isApproved} = req.body;
+  const { isApproved } = req.body;
   Admins.approveProblem(id, isApproved).then((problem) => {
       if (isApproved === true) {
         res.status(200).json({message: 'problem was approved',problem})

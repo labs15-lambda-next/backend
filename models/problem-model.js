@@ -8,7 +8,8 @@ module.exports = {
   deleteProblem,
   rateProblem,
   updateRating,
-  getPopularProblems
+  getPopularProblems,
+  getCreatedBy
 };
 
 function getProblems() {
@@ -23,6 +24,10 @@ function getProblems() {
     'numOfRatings',
     'isApproved'
   );
+}
+
+function getCreatedBy() {
+  return db('problems').select('created_by');
 }
 
 function getProblemsById(id) {
