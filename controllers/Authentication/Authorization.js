@@ -16,7 +16,9 @@ function checkAuthorization(req, res, next) {
         return res.status(500).json('You are not an administrator');
     }
 }
-router.get('/google', checkAuthentication, checkAuthorization, function(req, res) {
 
-});
+module.exports = {
+    checkAuthentication,
+    checkAuthorization
+}
 
