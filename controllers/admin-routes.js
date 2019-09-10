@@ -35,7 +35,7 @@ router.get('/all/:id', async (req, res) => {
 router.get('/csv/download', async (req, res) => {
     var csv = await Admins.adminGetUsers()
 
-  res.setHeader('Content-disposition', 'attachment; filename=testing.csv');
+  res.setHeader('Content-disposition', 'attachment; filename=users-signedup.csv');
   res.set('Content-Type', 'text/csv');
   res.status(200).send(csv);
 
