@@ -8,7 +8,8 @@ module.exports = {
   updateAdmin,
   getByEmail,
   add,
-  approveProblem
+  approveProblem,
+  adminGetUsers
 };
 
 
@@ -42,7 +43,11 @@ function add(admin) {
   return db('admin').insert(admin, 'id');
 }
 
-function approveProblem(id,problem) {
-  console.log('admin model prboel', problem)
-  return db('problems').where({id}).update({isApproved:problem})
+function approveProblem(id, problem) {
+  console.log('admin model prboel', problem);
+  return db('problems').where({ id }).update({ isApproved: problem });
+}
+
+function adminGetUsers() {
+  return db('users').select('id', 'full_name', 'email', 'problem_id');
 }
