@@ -1,5 +1,5 @@
 const router = require('express').Router();
-
+const fs = require('fs')
 const Admins = require('../models/admin-model.js');
 const Problems = require('../models/problem-model');
 
@@ -33,30 +33,11 @@ router.get('/all/:id', async (req, res) => {
 });
 
 router.get('/csv/download', async (req, res) => {
-  function dataToCSV(userList, headers) {
-    const allObjects = [];
-    allObjects.push(headers);
+    var csv = await Admins.adminGetUsers()
 
-    userList.forEach((object) => {
-      const arr = [];
-      arr.push(object.id);
-      arr.push(object.problem_id);
-      arr.push(object.full_name);
-      arr.push(object.email);
-
-      allObjects.push(arr);
-    });
-
-    let csvContent = '';
-
-
-    allObjects.forEach((infoArray, index) => {
-      const dataString = infoArray.join(',');
-      csvContent += index < allObjects.length ? `${dataString}\n` : dataString;
-    });
-
-    return csvContent;
-  }
+  res.setHeader('Content-disposition', 'attachment; filename=testing.csv');
+  res.set('Content-Type', 'text/csv');
+  res.status(200).send(csv);
 
 });
 router.put('/all/:id', async (req, res) => {
