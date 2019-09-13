@@ -2,6 +2,8 @@ const router = require('express').Router();
 // Model
 const sgMail = require('@sendgrid/mail');
 const Users = require('../models/users-model');
+// const welcomeTemplate = require('../welcomeTemplate.html');
+
 
 sgMail.setApiKey(process.env.SEND_KEY);
 
@@ -32,8 +34,7 @@ router.post('/signup', async (req, res) => {
         const msg = {
           to: req.body.email,
           from: 'noreply@lambdaschoolnext.com',
-          subject: 'welcome!',
-          html: 'Thank you for signing up. Youll be notified when the problem is approved.',
+          template_id: "d-47b2e930d92545a1a17ea05fe08d6752"
         };
         console.log(req.body.email);
         sgMail.send(msg);
