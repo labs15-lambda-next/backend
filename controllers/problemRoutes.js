@@ -34,7 +34,7 @@ router.post('/', async (req, res) => {
           to: req.body.created_by,
           from: 'noreply@labs15teamnext.com',
           subject: 'test 1',
-          text: 'test1!',
+          html: 'test1!',
         };
         sgMail.send(msg);
         res.status(200).json({ message: 'Problem has been posted' });
