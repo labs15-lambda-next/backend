@@ -6,7 +6,6 @@ const Problems = require('../models/problem-model');
 
 // gets all the problems and displays it to the admin so they can approve / decline
 router.get('/all', async (req, res) => {
-
   Problems.getProblems().then((problem) => {
     res.json(problem);
   }).catch((error) => {
@@ -15,7 +14,7 @@ router.get('/all', async (req, res) => {
 });
 
 router.get('/all/:id', async (req,res) => {
-   const { id } = req.params;
+  const { id } = req.params;
   try {
     const problem = await Problems.getProblemsById(id);
     if (problem) {
@@ -30,19 +29,20 @@ router.get('/all/:id', async (req,res) => {
       .status(404)
       .json({ message: `The reason you're getting an error: ${error}` });
   }
-})
+});
+
 router.put('/all/:id', async (req, res) => {
   const { id } = req.params;
   const { isApproved } = req.body;
   Admins.approveProblem(id, isApproved).then((problem) => {
-      if (isApproved === true) {
-        res.status(200).json({message: 'problem was approved',problem})
-      } else {
-        res.status(400).json({message: 'problem was removed from public dashboard'})
-      }
+    if (isApproved === true) {
+      res.status(200).json({ message: 'problem was approved', problem });
+    } else {
+      res.status(400).json({ message: 'problem was removed from public dashboard' });
+    }
   }).catch((error) => {
-    console.log('error', error)
-  })
+    console.log('error', error);
+  });
 });
 
 // decline problem, so you delete it
