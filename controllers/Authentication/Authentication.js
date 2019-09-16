@@ -34,7 +34,9 @@ router.get(
   passport.authenticate('google', {
     scope: ['profile', 'email'],
     prompt: 'select_account',
-  })
+  }), function(req, res) {
+    res.redirect('/admin/all')
+  }
 );
 
 // google login redirect
