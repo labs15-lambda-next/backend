@@ -22,7 +22,8 @@ function getProblems() {
     'created_by',
     'rating',
     'numOfRatings',
-    'isApproved'
+    'isApproved',
+    'isAccepting'
   );
 }
 
