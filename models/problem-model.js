@@ -66,9 +66,13 @@ function updateRating(id, user) {
 
 function getPopularProblems() {
   return db('problems').select(
+    'id',
     'problem_title',
     'problem_description',
     'problem_category',
-    'rating'
-  );
+    'rating',
+    'numOfRatings'
+  ).orderBy('numOfRatings','desc').limit(3)
+
+  
 }

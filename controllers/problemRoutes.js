@@ -63,7 +63,7 @@ router.get('/popular', (req, res) => {
     .getPopularProblems()
     .then((rated) => {
       const ratingArr = rated.filter((sorted) => {
-        return sorted.rating > 3;
+        return sorted.rating >= 1 && sorted.numOfRatings > 10;
       });
       res.json(ratingArr);
     })
