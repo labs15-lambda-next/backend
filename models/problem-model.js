@@ -70,5 +70,5 @@ function getPopularProblems() {
     'problem_description',
     'problem_category',
     'rating'
-  );
+  ).where('numOfRatings' > 1)
 }
