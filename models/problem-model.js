@@ -69,6 +69,9 @@ function getPopularProblems() {
     'problem_title',
     'problem_description',
     'problem_category',
-    'rating'
-  ).where('numOfRatings' > 1)
+    'rating',
+    'numOfRatings'
+  ).orderBy('numOfRatings','desc')
+
+  
 }
