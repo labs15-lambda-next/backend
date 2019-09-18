@@ -126,7 +126,7 @@ router.put('/:id/rate', (req, res) => {
         .update(problem)
         .where({ id })
         .then((finalUser) => {
-          res.status(201).json(finalUser);
+          res.status(201).json(problem);
         })
         .catch((err) => res.status(500).json({ message: 'something went wrong while rating this problem.' }));
     })
