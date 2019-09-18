@@ -1,5 +1,6 @@
 require('dotenv').config({ path: './.env' });
 const express = require('express');
+// const auth = require('./controllers/Authentication/Authorization');
 const cors = require('cors');
 const helmet = require('helmet');
 const chalk = require('chalk').default;
