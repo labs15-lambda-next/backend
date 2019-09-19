@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const json2csv = require('json2csv').parse;
 const fs = require('fs');
 const Admins = require('../models/admin-model.js');
 const Problems = require('../models/problem-model');
@@ -32,18 +33,24 @@ router.get('/all/:id', async (req, res) => {
 });
 
 router.get('/csv/download', async (req, res) => {
-  const csv = await Admins.adminGetUsers();
-  let str = '';
-  for (i = 0; i < csv.length; i++) {
-    let line = '';
-    for (const index in csv[i]) {
-      if (line != '') line += ',';
 
-      line += csv[i][index];
-    }
+  const fields = [await Admins.adminGetUsers()];
+  const opts = { fields };
 
-    str += `${line}\r\n`;
-  }
+  const csv = json2csv(opts);
+
+  // const csv = await Admins.adminGetUsers();
+  // let str = '';
+  // for (i = 0; i < csv.length; i++) {
+  //   let line = '';
+  //   for (const index in csv[i]) {
+  //     if (line != '') line += ',';
+
+  //     line += csv[i][index];
+  //   }
+
+  //   str += `${line}\r\n`;
+  // }
   res.setHeader('Content-disposition', 'attachment; filename=users-signedup.csv');
   res.set('Content-Type', 'text/csv');
   res.status(200).send(csv);
