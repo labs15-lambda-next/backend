@@ -49,6 +49,7 @@ router.get('/', (req, res) => {
   db
     .getProblems()
     .then((problem) => {
+      console.log('CLG PROBLEM: ', problem);
       const problemArray = problem.filter((prblm) => prblm.isApproved === true);
       res.json(problemArray);
     })
@@ -62,9 +63,7 @@ router.get('/popular', (req, res) => {
   db
     .getPopularProblems()
     .then((rated) => {
-      const ratingArr = rated.filter((sorted) => {
-        return sorted.rating >= 1 && sorted.numOfRatings > 10;
-      });
+      const ratingArr = rated.filter((sorted) => sorted.rating >= 1 && sorted.numOfRatings > 10);
       res.json(ratingArr);
     })
     .catch((err) => {
