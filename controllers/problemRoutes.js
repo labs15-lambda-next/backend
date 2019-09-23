@@ -30,13 +30,13 @@ router.post('/', async (req, res) => {
       })
 
       .then((id) => {
-        const msg = {
+        /* const msg = {
           to: req.body.created_by,
           from: 'noreply@labs15teamnext.com',
           subject: 'test 1',
-          text: 'test1!',
+          html: 'test1!',
         };
-        sgMail.send(msg);
+        sgMail.send(msg); */
         res.status(200).json({ message: 'Problem has been posted' });
       })
       .catch((err) => {
@@ -63,7 +63,7 @@ router.get('/popular', (req, res) => {
     .getPopularProblems()
     .then((rated) => {
       const ratingArr = rated.filter((sorted) => {
-        return sorted.rating > 3;
+        return sorted.rating >= 1 && sorted.numOfRatings > 10;
       });
       res.json(ratingArr);
     })
@@ -138,7 +138,7 @@ router.put('/:id/rate', (req, res) => {
         .update(problem)
         .where({ id })
         .then((finalUser) => {
-          res.status(201).json(finalUser);
+          res.status(201).json(problem);
         })
         .catch((err) => res.status(500).json({ message: 'something went wrong while rating this problem.' }));
     })

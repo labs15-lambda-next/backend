@@ -20,6 +20,7 @@ exports.up = function (knex) {
 
     tbl.integer('numOfRatings', 8);
     tbl.boolean('isApproved').defaultTo(false)
+    tbl.boolean('isAccepting').defaultTo(true)
   });
 };
 exports.down = function (knex) {

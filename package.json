@@ -7,7 +7,8 @@
   "license": "MIT",
   "scripts": {
     "start:dev": "nodemon index.js",
-    "lint": "eslint '*.js' --fix"
+    "lint": "eslint '*.js' --fix",
+    "test": "jest"
   },
   "lint-staged": {
     "**/*.js": [
@@ -25,13 +26,15 @@
     "knex": "^0.19.2",
     "passport": "^0.4.0",
     "passport-google-oauth20": "^2.0.0",
-    "pg": "^7.12.1"
+    "pg": "^7.12.1",
+    "supertest": "^4.0.2"
   },
   "devDependencies": {
     "eslint": "^6.2.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
     "husky": "^3.0.4",
+    "jest": "^24.9.0",
     "lint-staged": "^9.2.3",
     "nodemon": "^1.19.1"
   }

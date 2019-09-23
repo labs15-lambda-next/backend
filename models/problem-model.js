@@ -22,7 +22,8 @@ function getProblems() {
     'created_by',
     'rating',
     'numOfRatings',
-    'isApproved'
+    'isApproved',
+    'isAccepting'
   );
 }
 
@@ -60,14 +61,18 @@ function rateProblem(id) {
 function updateRating(id, user) {
   return db('problems')
     .where({ id })
-    .update(user)
+    .update(user);
 }
 
 function getPopularProblems() {
   return db('problems').select(
+    'id',
     'problem_title',
     'problem_description',
     'problem_category',
-    'rating'
-  );
+    'rating',
+    'numOfRatings'
+  ).orderBy('numOfRatings','desc').limit(3)
+
+  
 }
