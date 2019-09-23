@@ -43,3 +43,6 @@ server.listen(port, () => {
   const serverRunMsg = `Server is active and listening on http://127.0.0.1:${port}`;
   console.log(chalk.green(serverRunMsg));
 });
+
+
+module.exports = server;
