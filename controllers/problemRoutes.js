@@ -1,15 +1,11 @@
 const express = require('express');
-const sgMail = require('@sendgrid/mail');
 const db = require('../models/problem-model');
 const Users = require('../models/users-model');
 const dbConf = require('../data/dbConfig');
 
 const router = express.Router();
 
-sgMail.setApiKey(process.env.SEND_KEY);
-
-
-router.post('/', async (req, res) => {
+router.post('/', (req, res) => {
   const {
     problem_title,
     problem_description,
@@ -30,13 +26,6 @@ router.post('/', async (req, res) => {
       })
 
       .then((id) => {
-        /* const msg = {
-          to: req.body.created_by,
-          from: 'noreply@labs15teamnext.com',
-          subject: 'test 1',
-          html: 'test1!',
-        };
-        sgMail.send(msg); */
         res.status(200).json({ message: 'Problem has been posted' });
       })
       .catch((err) => {
@@ -49,8 +38,7 @@ router.get('/', (req, res) => {
   db
     .getProblems()
     .then((problem) => {
-      const problemArray = problem.filter((prblm) => prblm.isApproved === true);
-      res.json(problemArray);
+      res.json(problem);
     })
     .catch((err) => {
       console.log(err);
@@ -63,7 +51,7 @@ router.get('/popular', (req, res) => {
     .getPopularProblems()
     .then((rated) => {
       const ratingArr = rated.filter((sorted) => {
-        return sorted.rating >= 1 && sorted.numOfRatings > 10;
+        return sorted.rating > 3;
       });
       res.json(ratingArr);
     })
@@ -137,13 +125,21 @@ router.put('/:id/rate', (req, res) => {
       dbConf('problems')
         .update(problem)
         .where({ id })
-        .then((finalUser) => {
-          res.status(201).json(finalUser);
+        .then((p) => {
+          res.status(201).json(problem);
         })
         .catch((err) => res.status(500).json({ message: 'something went wrong while rating this problem.' }));
     })
     .catch((err) => res.status(404).json({ message: 'unable to find that problem.' }));
 });
 
+router.delete('/:id', (req, res) => {
+  const { id } = req.params;
+  db
+    .deleteProblem(id)
+    .then((problem) => {
+      res.json(problem);
+    });
+});
 
 module.exports = router;
