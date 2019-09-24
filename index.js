@@ -39,7 +39,7 @@ const problemRouter = require('./controllers/problemRoutes');
 const adminRouter = require('./controllers/admin-routes');
 
 server.use('/users', usersRouter);
-server.use('/admin',/* authCheck,*/ adminRouter);
+server.use('/admin', /*authCheck,*/ adminRouter);
 server.use('/problems', problemRouter);
 // server.use('/auth', authRouter);
 server.get('/', (req, res) => {
