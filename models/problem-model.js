@@ -61,7 +61,7 @@ function rateProblem(id) {
 function updateRating(id, user) {
   return db('problems')
     .where({ id })
-    .update(user)
+    .update(user);
 }
 
 function getPopularProblems() {

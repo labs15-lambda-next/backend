@@ -1,7 +1,23 @@
-require('dotenv').config({ path: './.env' })
+require('dotenv').config({ path: './.env' });
 // fix seeds
 module.exports = {
   development: {
+    client: 'pg',
+    connection: {
+      database: 'postgres',
+      user: 'postgres',
+      password: 'postgres',
+      host: 'localhost',
+      port: 5432
+    },
+    migrations: {
+      directory: './data/migrations'
+    },
+    seeds: {
+      directory: './data/seeds'
+    }
+  },
+  test: {
     client: 'pg',
     connection: {
       database: 'postgres',
@@ -57,4 +73,4 @@ module.exports = {
       directory: './data/seeds'
     }
   }
-}
+};

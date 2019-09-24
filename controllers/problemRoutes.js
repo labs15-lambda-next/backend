@@ -38,7 +38,9 @@ router.get('/', (req, res) => {
   db
     .getProblems()
     .then((problem) => {
-      res.json(problem);
+      console.log('CLG PROBLEM: ', problem);
+      const problemArray = problem.filter((prblm) => prblm.isApproved === true);
+      res.json(problemArray);
     })
     .catch((err) => {
       console.log(err);
@@ -50,9 +52,7 @@ router.get('/popular', (req, res) => {
   db
     .getPopularProblems()
     .then((rated) => {
-      const ratingArr = rated.filter((sorted) => {
-        return sorted.rating > 3;
-      });
+      const ratingArr = rated.filter((sorted) => sorted.rating >= 1 && sorted.numOfRatings > 10);
       res.json(ratingArr);
     })
     .catch((err) => {
@@ -125,7 +125,7 @@ router.put('/:id/rate', (req, res) => {
       dbConf('problems')
         .update(problem)
         .where({ id })
-        .then((p) => {
+        .then((finalUser) => {
           res.status(201).json(problem);
         })
         .catch((err) => res.status(500).json({ message: 'something went wrong while rating this problem.' }));

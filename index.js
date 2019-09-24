@@ -6,13 +6,26 @@ const helmet = require('helmet');
 const chalk = require('chalk').default;
 const passport = require('passport');
 const passportSetup = require('./controllers/Authentication/passport-setup');
+const authCheck = require('./controllers/Authentication/authCheck');
 
 const server = express();
+const cookieSession = require('cookie-session');
 // middleware
 // const corsOptions = {
 //   origin: process.env.FRONTEND_URL,
 //   credentials: true,
 // };
+
+server.use(
+  cookieSession({
+    name: 'cookie',
+    maxAge: 24 * 60 * 60 * 1000,
+    keys: [process.env.SESSION_COOKIE],
+    secure: false,
+    // httpOnly: true,
+    signed: true,
+  })
+);
 server.use(express.json());
 server.use(helmet());
 server.use(cors());
@@ -26,7 +39,7 @@ const authRouter = require('./controllers/Authentication/Authentication');
 const adminRouter = require('./controllers/admin-routes');
 
 server.use('/users', usersRouter);
-server.use('/admin', adminRouter);
+server.use('/admin', /*authCheck,*/ adminRouter);
 server.use('/problems', problemRouter);
 server.use('/auth', authRouter);
 server.get('/', (req, res) => {
@@ -43,3 +56,6 @@ server.listen(port, () => {
   const serverRunMsg = `Server is active and listening on http://127.0.0.1:${port}`;
   console.log(chalk.green(serverRunMsg));
 });
+
+
+module.exports = server;
