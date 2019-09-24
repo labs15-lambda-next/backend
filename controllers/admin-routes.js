@@ -6,8 +6,12 @@ const Problems = require('../models/problem-model');
 
 // gets all the problems and displays it to the admin so they can approve / decline
 router.get('/all', async (req, res) => {
+  // const cookie = res.headers.cookie
+  // console.log('be cookie',res.headers)
+
   Problems.getProblems().then((problem) => {
-    res.json(problem);
+    res.json(problem)
+    res.set({"token": res.headers})
   }).catch((error) => {
     res.status(500).json({ message: 'Error retrieving the problems' });
   });
