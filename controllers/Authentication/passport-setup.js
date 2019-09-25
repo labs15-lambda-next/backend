@@ -20,6 +20,7 @@ passport.use(
     },
     (accessToken, refreshToken, profile, done) => {
       verifyGoogleUser({ profile, token: accessToken }, done);
+      // console.log(accessToken);
     }
   )
 );
