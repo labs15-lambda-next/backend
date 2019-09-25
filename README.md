@@ -32,24 +32,27 @@ To get the server running locally:
 
 🚫This is a placeholder, replace the endpoints, access controll, and descriptioin to match your project
 
-#### Organization Routes
+#### Admin Routes
 
-| Method | Endpoint                | Access Control | Description                                  |
-| ------ | ----------------------- | -------------- | -------------------------------------------- |
-| GET    | `/organizations/:orgId` | all users      | Returns the information for an organization. |
-| PUT    | `/organizatoins/:orgId` | owners         | Modify an existing organization.             |
-| DELETE | `/organizations/:orgId` | owners         | Delete an organization.                      |
+| Method | Endpoint                  | Access Control | Description                                           |
+| ------ | ------------------------- | -------------- | ----------------------------------------------------- |
+| GET    | `/admin/all`              | admins         | Returns the information for all problems.             |
+| PUT    | `/admin/all/:id`          | admins         | Modify an existing problem by approving/declining it. |
+| PUT    | `/admin/all/problems/:id` | ADMIN          | Admins can edit the problem in their view.            |
+| DELETE | `/admin/all/:id`          | admins         | Delete a problem.                                     |
 
-#### User Routes
+#### Problem Routes
 
-| Method | Endpoint                | Access Control      | Description                                        |
-| ------ | ----------------------- | ------------------- | -------------------------------------------------- |
-| GET    | `/users/current`        | all users           | Returns info for the logged in user.               |
-| GET    | `/users/org/:userId`    | owners, supervisors | Returns all users for an organization.             |
-| GET    | `/users/:userId`        | owners, supervisors | Returns info for a single user.                    |
-| POST   | `/users/register/owner` | none                | Creates a new user as owner of a new organization. |
-| PUT    | `/users/:userId`        | owners, supervisors |                                                    |
-| DELETE | `/users/:userId`        | owners, supervisors |                                                    |
+| Method | Endpoint               | Access Control | Description                                             |
+| ------ | ---------------------- | -------------- | ------------------------------------------------------- |
+| GET    | `/problems`            | all users      | Returns info for all problems                           |
+| GET    | `/problems/id`         | all users      | Returns all users for an organization.                  |
+| GET    | `/problems/popular`    | all users      | Returns top 3 problems                                  |
+| POST   | `/problems`            | all users      | Creates a a new problem where users can rate/signup to. |
+| POST   | `/problems/:id/signup` | all users      | Users can back a problem by signing up to it.           |
+| PUT    | `/problems/:id`        | ADMIN          | Admins can edit the problem in their view.              |
+| PUT    | `/problems/:id/rate`   | all users      | Users sends a rating.                                   |
+| POST   | `/users/signup`        | all users      | Users can back a problem by signing up to it.           |
 
 # Data Model
 
