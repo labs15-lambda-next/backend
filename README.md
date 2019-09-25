@@ -1,36 +1,27 @@
-🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline. Feel free to add your own flare to it.
-
-🚫 The numbers 1️⃣ through 3️⃣ next to each item represent the week that part of the docs needs to be comepleted by. Make sure to delete the numbers by the end of Labs.
-
-🚫 Each student has a required minimum number of meaningful PRs each week per the rubric. Contributing to docs does NOT count as a PR to meet your weekly requirements.
-
 # API Documentation
 
-#### 1️⃣ Backend delpoyed at [🚫name service here](🚫add URL here) <br>
+#### Backend delpoyed at [Heroku](https://labs15-lambdanext.herokuapp.com/) <br>
 
-## 1️⃣ Getting started
+## Getting started
 
 To get the server running locally:
-
-🚫 adjust these scripts to match your project
 
 - Clone this repo
 - **yarn install** to install all required dependencies
 - **yarn server** to start the local server
 - **yarn test** to start server using testing environment
+- **docker-compose up** to run db locally.
 
-### Backend framework goes here
+### Express JS
 
 🚫 Why did you choose this framework?
 
-- Point One
-- Point Two
-- Point Three
-- Point Four
+- Based off experience alone and also fits perfectly for the project.
+- Easy Scalability
+- Express makes it easier by having to write less code vs using only node.
+- Clear documentation
 
 ## 2️⃣ Endpoints
-
-🚫This is a placeholder, replace the endpoints, access controll, and descriptioin to match your project
 
 #### Admin Routes
 
@@ -104,39 +95,71 @@ To get the server running locally:
 }
 ```
 
-## 2️⃣ Actions
+## Actions
 
-🚫 This is an example, replace this with the actions that pertain to your backend
+### Users <br>
 
-`getOrgs()` -> Returns all organizations
+---
 
-`getOrg(orgId)` -> Returns a single organization by ID
+`getUsers()` -> Returns all users signed up to a problem
 
-`addOrg(org)` -> Returns the created org
+`getUserEmail()` -> Returns a user's full name and email.
 
-`updateOrg(orgId)` -> Update an organization by ID
+`addUser(user)` -> Adds a new user
 
-`deleteOrg(orgId)` -> Delete an organization by ID
+`updateUser(id, changes)` -> Update a user by ID
+
+`deleteUser(id)` -> Delete a user by ID
+
+### Admins <br>
+
+---
+
+`getAdmin()` -> Returns all admins
+
+`getAdminByID()` -> Returns specefic admin.
+
+`addAdmin(admin)` -> Adds a new admin
+
+`updateAdmin(id, changes)` -> Update an Admin by ID
+
+`deleteAdmin(id)` -> Delete an admin by ID
+
+`getByEmail(filter)` -> Filters through emails
+
+`add(admin)` -> Adds a new admin
+
+`approveProblem(id,problem)` -> Modify problem by boolean
+
+### Problems <br>
+
+---
+
+`getProblems()` -> Returns a list of problems
+
+`getCreatedBy()` -> Returns problems that have been created by anyone
+
+`insertProblem(problem)` -> Adds a new problem
+
+`updateProblem(id, update)` -> Updates a problem by ID
+
+`deleteProblem(id)` -> Deletes a problem by ID
+
+`rateProblem(id)` -> Rate problem by ID
+
+`updateRating(id, user)` => Update rating by ID
+
+`getPopularProblems()` -> Returns the top 3 problems with the most number of rating
+
 <br>
 <br>
 <br>
-`getUsers(orgId)` -> if no param all users
 
-`getUser(userId)` -> Returns a single user by user ID
-
-`addUser(user object)` --> Creates a new user and returns that user. Also creates 7 availabilities defaulted to hours of operation for their organization.
-
-`updateUser(userId, changes object)` -> Updates a single user by ID.
-
-`deleteUser(userId)` -> deletes everything dependent on the user
-
-## 3️⃣ Environment Variables
+## Environment Variables
 
 In order for the app to function correctly, the user must set up their own environment variables.
 
 create a .env file that includes the following:
-
-🚫 These are just examples, replace them with the specifics for your app
 
     *  STAGING_DB - optional development db for using functionality not available in SQLite
     *  NODE_ENV - set to "development" until ready for "production"
