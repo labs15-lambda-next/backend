@@ -4,9 +4,9 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const chalk = require('chalk').default;
-const passport = require('passport');
-const passportSetup = require('./controllers/Authentication/passport-setup');
-const authCheck = require('./controllers/Authentication/authCheck');
+// const passport = require('passport');
+// const passportSetup = require('./controllers/Authentication/passport-setup');
+// const authCheck = require('./controllers/Authentication/authCheck');
 
 const server = express();
 const cookieSession = require('cookie-session');
@@ -16,7 +16,7 @@ const cookieSession = require('cookie-session');
 //   credentials: true,
 // };
 
-server.use(
+/*server.use(
   cookieSession({
     name: 'cookie',
     maxAge: 24 * 60 * 60 * 1000,
@@ -25,23 +25,23 @@ server.use(
     // httpOnly: true,
     signed: true,
   })
-);
+);*/
 server.use(express.json());
 server.use(helmet());
 server.use(cors());
 // initialize passport
-server.use(passport.initialize());
-server.use(passport.session());
+// server.use(passport.initialize());
+// server.use(passport.session());
 // endpoints
 const usersRouter = require('./controllers/users-routes');
 const problemRouter = require('./controllers/problemRoutes');
-const authRouter = require('./controllers/Authentication/Authentication');
+// const authRouter = require('./controllers/Authentication/Authentication');
 const adminRouter = require('./controllers/admin-routes');
 
 server.use('/users', usersRouter);
-server.use('/admin', authCheck, adminRouter);
+server.use('/admin', /*authCheck,*/ adminRouter);
 server.use('/problems', problemRouter);
-server.use('/auth', authRouter);
+// server.use('/auth', authRouter);
 server.get('/', (req, res) => {
   try {
     res.status(200).json({ message: 'Root endpoint is functional.' });
