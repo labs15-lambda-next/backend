@@ -58,18 +58,36 @@ To get the server running locally:
 
 🚫This is just an example. Replace this with your data model
 
-#### 2️⃣ ORGANIZATIONS
+#### 2️⃣ ADMIN
 
 ---
 
 ```
 {
-  id: UUID
-  name: STRING
-  industry: STRING
-  paid: BOOLEAN
-  customer_id: STRING
-  subscription_id: STRING
+    id: UUID,
+    email: STRING,
+    password: STRING,
+    google_id: STRING
+}
+```
+
+#### PROBLEMS
+
+---
+
+```
+{
+    id: UUID,
+    problem_title: STRING,
+    problem_description: STRING,
+    problem_category: STRING,
+    date_created: STRING,
+    created_by: STRING,
+    admin_id: UUID foreign key in ADMIN table
+    rating: FLOAT,
+    numOfRatings: INTEGER,
+    isApproved: BOOLEAN defaulted to false,
+    isAccepting: BOOLEAN defaulted to true
 }
 ```
 
@@ -79,17 +97,10 @@ To get the server running locally:
 
 ```
 {
-  id: UUID
-  organization_id: UUID foreign key in ORGANIZATIONS table
-  first_name: STRING
-  last_name: STRING
-  role: STRING [ 'owner', 'supervisor', 'employee' ]
-  email: STRING
-  phone: STRING
-  cal_visit: BOOLEAN
-  emp_visit: BOOLEAN
-  emailpref: BOOLEAN
-  phonepref: BOOLEAN
+    id: UUID,
+    full_name: STRING,
+    email: STRING,
+    problem_id: UUID foreign key in PROBLEMS table
 }
 ```
 
@@ -131,7 +142,33 @@ create a .env file that includes the following:
     *  NODE_ENV - set to "development" until ready for "production"
     *  JWT_SECRET - you can generate this by using a python shell and running import random''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&amp;*(-*=+)') for i in range(50)])
     *  SENDGRID_API_KEY - this is generated in your Sendgrid account
-    *  stripe_secret - this is generated in the Stripe dashboard
+    *  GOOGLE_CLIENT_ID - this is generated in the google console dev dashboard
+    *  GOOGLE_CLIENT_SECRET - this is generated in the google dashboard
+
+#### sample .env file
+
+---
+
+```
+PG_HOST=
+PG_DB=
+PG_USER=
+PG_PASS=
+
+STAGING=
+S_HOST=
+S_DB=
+S_USER=
+S_PASS=
+
+
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+SEND_KEY=
+FRONTEND_URL=
+
+
+```
 
 ## Contributing
 
@@ -172,5 +209,5 @@ These contribution guidelines have been adapted from [this good-Contributing.md-
 
 ## Documentation
 
-See [Frontend Documentation](🚫link to your frontend readme here) for details on the fronend of our project.
-🚫 Add DS iOS and/or Andriod links here if applicable.
+See [Frontend Documentation](https://github.com/labs15-lambda-next/frontend) for details on the fronend of our project.
+Add DS iOS and/or Andriod links here if applicable.
