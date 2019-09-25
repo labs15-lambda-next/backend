@@ -1,72 +1,84 @@
-🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline. Feel free to add your own flare to it.
-
-🚫 The numbers 1️⃣ through 3️⃣ next to each item represent the week that part of the docs needs to be comepleted by. Make sure to delete the numbers by the end of Labs.
-
-🚫 Each student has a required minimum number of meaningful PRs each week per the rubric. Contributing to docs does NOT count as a PR to meet your weekly requirements.
-
 # API Documentation
 
-#### 1️⃣ Backend delpoyed at [🚫name service here](🚫add URL here) <br>
+#### Backend delpoyed at [Heroku](https://labs15-lambdanext.herokuapp.com/) <br>
 
-## 1️⃣ Getting started
+## Getting started
 
 To get the server running locally:
-
-🚫 adjust these scripts to match your project
 
 - Clone this repo
 - **yarn install** to install all required dependencies
 - **yarn server** to start the local server
 - **yarn test** to start server using testing environment
+- **docker-compose up** to run db locally.
 
-### Backend framework goes here
+### Express JS
 
 🚫 Why did you choose this framework?
 
-- Point One
-- Point Two
-- Point Three
-- Point Four
+- Based off experience alone and also fits perfectly for the project.
+- Easy Scalability
+- Express makes it easier by having to write less code vs using only node.
+- Clear documentation
 
 ## 2️⃣ Endpoints
 
-🚫This is a placeholder, replace the endpoints, access controll, and descriptioin to match your project
+#### Admin Routes
 
-#### Organization Routes
+| Method | Endpoint                  | Access Control | Description                                           |
+| ------ | ------------------------- | -------------- | ----------------------------------------------------- |
+| GET    | `/admin/all`              | admins         | Returns the information for all problems.             |
+| PUT    | `/admin/all/:id`          | admins         | Modify an existing problem by approving/declining it. |
+| PUT    | `/admin/all/problems/:id` | ADMIN          | Admins can edit the problem in their view.            |
+| DELETE | `/admin/all/:id`          | admins         | Delete a problem.                                     |
 
-| Method | Endpoint                | Access Control | Description                                  |
-| ------ | ----------------------- | -------------- | -------------------------------------------- |
-| GET    | `/organizations/:orgId` | all users      | Returns the information for an organization. |
-| PUT    | `/organizatoins/:orgId` | owners         | Modify an existing organization.             |
-| DELETE | `/organizations/:orgId` | owners         | Delete an organization.                      |
+#### Problem Routes
 
-#### User Routes
-
-| Method | Endpoint                | Access Control      | Description                                        |
-| ------ | ----------------------- | ------------------- | -------------------------------------------------- |
-| GET    | `/users/current`        | all users           | Returns info for the logged in user.               |
-| GET    | `/users/org/:userId`    | owners, supervisors | Returns all users for an organization.             |
-| GET    | `/users/:userId`        | owners, supervisors | Returns info for a single user.                    |
-| POST   | `/users/register/owner` | none                | Creates a new user as owner of a new organization. |
-| PUT    | `/users/:userId`        | owners, supervisors |                                                    |
-| DELETE | `/users/:userId`        | owners, supervisors |                                                    |
+| Method | Endpoint               | Access Control | Description                                             |
+| ------ | ---------------------- | -------------- | ------------------------------------------------------- |
+| GET    | `/problems`            | all users      | Returns info for all problems                           |
+| GET    | `/problems/id`         | all users      | Returns all users for an organization.                  |
+| GET    | `/problems/popular`    | all users      | Returns top 3 problems                                  |
+| POST   | `/problems`            | all users      | Creates a a new problem where users can rate/signup to. |
+| POST   | `/problems/:id/signup` | all users      | Users can back a problem by signing up to it.           |
+| PUT    | `/problems/:id`        | ADMIN          | Admins can edit the problem in their view.              |
+| PUT    | `/problems/:id/rate`   | all users      | Users sends a rating.                                   |
+| POST   | `/users/signup`        | all users      | Users can back a problem by signing up to it.           |
 
 # Data Model
 
 🚫This is just an example. Replace this with your data model
 
-#### 2️⃣ ORGANIZATIONS
+#### 2️⃣ ADMIN
 
 ---
 
 ```
 {
-  id: UUID
-  name: STRING
-  industry: STRING
-  paid: BOOLEAN
-  customer_id: STRING
-  subscription_id: STRING
+    id: UUID,
+    email: STRING,
+    password: STRING,
+    google_id: STRING
+}
+```
+
+#### PROBLEMS
+
+---
+
+```
+{
+    id: UUID,
+    problem_title: STRING,
+    problem_description: STRING,
+    problem_category: STRING,
+    date_created: STRING,
+    created_by: STRING,
+    admin_id: UUID foreign key in ADMIN table
+    rating: FLOAT,
+    numOfRatings: INTEGER,
+    isApproved: BOOLEAN defaulted to false,
+    isAccepting: BOOLEAN defaulted to true
 }
 ```
 
@@ -76,59 +88,110 @@ To get the server running locally:
 
 ```
 {
-  id: UUID
-  organization_id: UUID foreign key in ORGANIZATIONS table
-  first_name: STRING
-  last_name: STRING
-  role: STRING [ 'owner', 'supervisor', 'employee' ]
-  email: STRING
-  phone: STRING
-  cal_visit: BOOLEAN
-  emp_visit: BOOLEAN
-  emailpref: BOOLEAN
-  phonepref: BOOLEAN
+    id: UUID,
+    full_name: STRING,
+    email: STRING,
+    problem_id: UUID foreign key in PROBLEMS table
 }
 ```
 
-## 2️⃣ Actions
+## Actions
 
-🚫 This is an example, replace this with the actions that pertain to your backend
+### Users <br>
 
-`getOrgs()` -> Returns all organizations
+---
 
-`getOrg(orgId)` -> Returns a single organization by ID
+`getUsers()` -> Returns all users signed up to a problem
 
-`addOrg(org)` -> Returns the created org
+`getUserEmail()` -> Returns a user's full name and email.
 
-`updateOrg(orgId)` -> Update an organization by ID
+`addUser(user)` -> Adds a new user
 
-`deleteOrg(orgId)` -> Delete an organization by ID
+`updateUser(id, changes)` -> Update a user by ID
+
+`deleteUser(id)` -> Delete a user by ID
+
+### Admins <br>
+
+---
+
+`getAdmin()` -> Returns all admins
+
+`getAdminByID()` -> Returns specefic admin.
+
+`addAdmin(admin)` -> Adds a new admin
+
+`updateAdmin(id, changes)` -> Update an Admin by ID
+
+`deleteAdmin(id)` -> Delete an admin by ID
+
+`getByEmail(filter)` -> Filters through emails
+
+`add(admin)` -> Adds a new admin
+
+`approveProblem(id,problem)` -> Modify problem by boolean
+
+### Problems <br>
+
+---
+
+`getProblems()` -> Returns a list of problems
+
+`getCreatedBy()` -> Returns problems that have been created by anyone
+
+`insertProblem(problem)` -> Adds a new problem
+
+`updateProblem(id, update)` -> Updates a problem by ID
+
+`deleteProblem(id)` -> Deletes a problem by ID
+
+`rateProblem(id)` -> Rate problem by ID
+
+`updateRating(id, user)` => Update rating by ID
+
+`getPopularProblems()` -> Returns the top 3 problems with the most number of rating
+
 <br>
 <br>
 <br>
-`getUsers(orgId)` -> if no param all users
 
-`getUser(userId)` -> Returns a single user by user ID
-
-`addUser(user object)` --> Creates a new user and returns that user. Also creates 7 availabilities defaulted to hours of operation for their organization.
-
-`updateUser(userId, changes object)` -> Updates a single user by ID.
-
-`deleteUser(userId)` -> deletes everything dependent on the user
-
-## 3️⃣ Environment Variables
+## Environment Variables
 
 In order for the app to function correctly, the user must set up their own environment variables.
 
 create a .env file that includes the following:
 
-🚫 These are just examples, replace them with the specifics for your app
-
     *  STAGING_DB - optional development db for using functionality not available in SQLite
     *  NODE_ENV - set to "development" until ready for "production"
     *  JWT_SECRET - you can generate this by using a python shell and running import random''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&amp;*(-*=+)') for i in range(50)])
     *  SENDGRID_API_KEY - this is generated in your Sendgrid account
-    *  stripe_secret - this is generated in the Stripe dashboard
+    *  GOOGLE_CLIENT_ID - this is generated in the google console dev dashboard
+    *  GOOGLE_CLIENT_SECRET - this is generated in the google dashboard
+
+#### sample .env file
+
+---
+
+```
+PG_HOST=
+PG_DB=
+PG_USER=
+PG_PASS=
+
+STAGING=
+S_HOST=
+S_DB=
+S_USER=
+S_PASS=
+
+
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+SEND_KEY=
+FRONTEND_URL=
+
+
+```
 
 ## Contributing
 
@@ -169,5 +232,5 @@ These contribution guidelines have been adapted from [this good-Contributing.md-
 
 ## Documentation
 
-See [Frontend Documentation](🚫link to your frontend readme here) for details on the fronend of our project.
-🚫 Add DS iOS and/or Andriod links here if applicable.
+See [Frontend Documentation](https://github.com/labs15-lambda-next/frontend) for details on the fronend of our project.
+Add DS iOS and/or Andriod links here if applicable.
