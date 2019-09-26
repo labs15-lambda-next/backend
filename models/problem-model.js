@@ -72,5 +72,6 @@ function getPopularProblems() {
     'problem_category',
     'numOfRatings',
     'date_created'
-  ).orderBy('numOfRatings', 'desc').limit(3);
+  ).where('numOfRatings', '>', 0).orderBy('numOfRatings', 'desc')
+    .limit(3);
 }

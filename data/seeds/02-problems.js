@@ -6,7 +6,7 @@ exports.seed = function (knex) {
       // eslint-disable-next-line implicit-arrow-linebreak
       knex('problems').insert([
         {
-          id: 1, problem_title: 'Ieed to keep track of my medical stats', problem_description: 'Medical stats.....', problem_category: 'Health', date_created: '2019', created_by: 'Joe',rating: 5, numOfRatings: 0, isApproved: false
+          id: 1, problem_title: 'Ieed to keep track of my medical stats', problem_description: 'Medical stats.....', problem_category: 'Health', date_created: '2019', created_by: 'Joe',rating: 5, numOfRatings: 1, isApproved: false
         },
         {
           id: 2, problem_title: 'How do I tie my toes?', problem_description: 'Im just trying to them my toes', problem_category: 'Personal', date_created: '2015', created_by: 'Bob',rating: 4, numOfRatings: 0, isApproved: false

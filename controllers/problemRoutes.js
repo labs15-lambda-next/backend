@@ -52,35 +52,13 @@ router.get('/popular', (req, res) => {
   db
     .getPopularProblems()
     .then((voted) => {
-      if (voted.numOfRatings < 1) {
-        const noVotes = voted.filter((byDate) => byDate.date_created);
-        console.log('hitting no votes');
-        res.status(200).json(noVotes);
-      } else {
-        console.log('hitting else');
-        res.status(200).json(voted);
-      }
+      res.status(200).json(voted);
     })
     .catch((err) => {
       console.log(err);
       res.status(500).json({ message: 'Error getting popular problems' });
     });
 });
-
-/*
-  db
-    .getPopularProblems()
-    .then((voted) => {
-      const votedArr = voted.filter((sorted) => sorted.numOfRatings >= 1);
-      const votedArray = votedArr.sort((s) => s.date_created);
-      res.json(votedArray);
-      console.log(votedArray);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({ message: 'Error getting popular problems' });
-    });
-*/
 
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
