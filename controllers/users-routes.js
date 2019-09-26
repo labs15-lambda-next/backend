@@ -26,7 +26,7 @@ router.post('/signup', async (req, res) => {
   if (!problem_id, !full_name || !email) {
     res.status(404).json({ message: 'Enter your name and email' });
   } else {
-    Users.addUser(req.body)
+    Users.getEmailProblem(req.body)
       .then((user) => {
         const msg = {
           to: req.body.email,
