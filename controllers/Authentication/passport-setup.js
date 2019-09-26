@@ -1,3 +1,4 @@
+
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const Admins = require('../../models/admin-model');
@@ -26,6 +27,8 @@ passport.use(
 );
 
 const verifyGoogleUser = async (obj, done) => {
+
+  localStorage.setItem('accessToken', accessToken);
   const { profile, token } = obj;
   const user = await Admins.getByEmail(profile.emails[0].value).catch((err) => console.error(err));
 
