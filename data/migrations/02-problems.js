@@ -16,11 +16,13 @@ exports.up = function (knex) {
     tbl
       .string('created_by');
 
-    tbl.float('rating', 8);
+    tbl.float('rating', 8).defaultTo(0);
 
-    tbl.integer('numOfRatings', 8);
-    tbl.boolean('isApproved').defaultTo(false)
-    tbl.boolean('isAccepting').defaultTo(true)
+    tbl.integer('numOfRatings', 8).defaultTo(0);
+
+    tbl.boolean('isApproved').defaultTo(false);
+
+    tbl.boolean('isAccepting').defaultTo(true);
   });
 };
 exports.down = function (knex) {

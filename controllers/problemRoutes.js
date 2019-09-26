@@ -51,9 +51,8 @@ router.get('/', (req, res) => {
 router.get('/popular', (req, res) => {
   db
     .getPopularProblems()
-    .then((rated) => {
-      const ratingArr = rated.filter((sorted) => sorted.rating >= 1 && sorted.numOfRatings > 10);
-      res.json(ratingArr);
+    .then((voted) => {
+      res.status(200).json(voted);
     })
     .catch((err) => {
       console.log(err);
