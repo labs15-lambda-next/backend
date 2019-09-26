@@ -26,8 +26,16 @@ router.post('/signup', async (req, res) => {
   if (!problem_id, !full_name || !email) {
     res.status(404).json({ message: 'Enter your name and email' });
   } else {
-    Users.getEmailProblem(req.body)
+    Users.addUser(req.body)
       .then((user) => {
+        console.log('usr route', user);
+        if (user === 'Email already exists') {
+          return res.status(401).json({
+            message: `Email already exists for this problem: ${email}`,
+            user: req.body,
+
+          });
+        }
         const msg = {
           to: req.body.email,
           from: 'noreply@lambdaschoolnext.com',
@@ -35,7 +43,7 @@ router.post('/signup', async (req, res) => {
         };
         console.log(req.body.email);
         sgMail.send(msg);
-        res.status(200).json({
+        return res.status(200).json({
           message: `new user signed up: ${email}`,
           user: req.body,
         });
