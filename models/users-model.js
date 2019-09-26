@@ -6,7 +6,8 @@ module.exports = {
   getUserById,
   addUser,
   deleteUser,
-  updateUser
+  updateUser,
+  getEmailProblem
 };
 
 
@@ -22,6 +23,7 @@ function getUserById(id) {
 }
 async function addUser(user) {
   const response = await db('users').insert(user);
+
   return response;
   // const [id] = await db('users').insert(user);
   // return getUserById(id);
@@ -35,4 +37,18 @@ function deleteUser(id) {
   return db('users')
     .where('id', id)
     .del();
+}
+
+function getEmailProblem(userNameList, problem_id, email) {
+  return db('users').select('problem_id', 'email')
+    .where('email', email)
+    .then(() => {
+      if (email === 0) {
+        return console.log('email n problem id edxiszts');
+      }
+
+      return addUser();
+
+
+    });
 }
