@@ -31,7 +31,7 @@ router.post('/signup', async (req, res) => {
         const msg = {
           to: req.body.email,
           from: 'noreply@lambdaschoolnext.com',
-          template_id: 'd-47b2e930d92545a1a17ea05fe08d6752'
+          template_id: 'd-1b9b6aa2b3ea4b1ea48dec6176fada04'
         };
         console.log(req.body.email);
         sgMail.send(msg);
