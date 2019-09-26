@@ -13,7 +13,7 @@ router.get('/all', async (req, res) => {
   });
 });
 
-router.get('/all/:id', async (req,res) => {
+router.get('/all/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const problem = await Problems.getProblemsById(id);
@@ -43,6 +43,18 @@ router.put('/all/:id', async (req, res) => {
   }).catch((error) => {
     console.log('error', error);
   });
+});
+
+// edit problem content
+
+router.put('/all/problems/:id', (req, res) => {
+  const { id } = req.params;
+  const { problem_title, problem_description, problem_category } = req.body;
+  Problems
+    .updateProblem(id, { problem_title, problem_description, problem_category })
+    .then((problem) => {
+      res.json(problem);
+    });
 });
 
 // decline problem, so you delete it
