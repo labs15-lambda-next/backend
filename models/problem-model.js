@@ -70,9 +70,9 @@ function getPopularProblems() {
     'problem_title',
     'problem_description',
     'problem_category',
-    'rating',
-    'numOfRatings'
-  ).orderBy('numOfRatings','desc').limit(3)
-
-  
+    'numOfRatings',
+    'date_created'
+  ).where('numOfRatings', '>', 0).where('isApproved', true)
+    .orderBy('numOfRatings', 'desc')
+    .limit(3);
 }
