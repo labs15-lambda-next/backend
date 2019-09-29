@@ -1,5 +1,7 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+// const jwt = require('jsonwebtoken');
+// const secrets = require('../../config/secrets.js');
 const Admins = require('../../models/admin-model');
 
 passport.serializeUser((user, done) => {
@@ -28,7 +30,8 @@ passport.use(
 const verifyGoogleUser = async (obj, done) => {
   const { profile, token } = obj;
   const user = await Admins.getByEmail(profile.emails[0].value).catch((err) => console.error(err));
-
+  // const clientToken = generateToken(user);
+  // console.log('clientToken', clientToken);
   try {
     if (!user) {
       const [id] = await Admins.add({
@@ -43,3 +46,17 @@ const verifyGoogleUser = async (obj, done) => {
     console.error(err);
   }
 };
+// function generateToken(admin) {
+//   console.log('clg admin id', admin.id);
+//   console.log('admin email', admin.email);
+//   const payload = {
+//     subject: admin.id || admin.google_id,
+//     email: admin.email
+//   };
+
+//   const options = {
+//     expiresIn: '1d'
+//   };
+
+//   return jwt.sign(payload, secrets.jwtSecret, options);
+// }

@@ -6,17 +6,17 @@ const helmet = require('helmet');
 const chalk = require('chalk').default;
 const passport = require('passport');
 const passportSetup = require('./controllers/Authentication/passport-setup');
-// const authCheck = require('./controllers/Authentication/authCheck');
+const authCheck = require('./controllers/Authentication/authCheck');
 
 const server = express();
-// const cookieSession = require('cookie-session');
+const cookieSession = require('cookie-session');
 // middleware
-// const corsOptions = {
-//   origin: process.env.FRONTEND_URL,
-//   credentials: true,
-// };
+const corsOptions = {
+  origin: process.env.FRONTEND_URL,
+  credentials: true,
+};
 
-/* server.use(
+server.use(
   cookieSession({
     name: 'cookie',
     maxAge: 24 * 60 * 60 * 1000,
@@ -25,10 +25,10 @@ const server = express();
     // httpOnly: true,
     signed: true,
   })
-); */
+);
 server.use(express.json());
 server.use(helmet());
-server.use(cors());
+server.use(cors(corsOptions));
 // initialize passport
 server.use(passport.initialize());
 server.use(passport.session());
@@ -39,7 +39,12 @@ const authRouter = require('./controllers/Authentication/Authentication');
 const adminRouter = require('./controllers/admin-routes');
 
 server.use('/users', usersRouter);
-server.use('/admin', adminRouter);
+server.use('/admin', authCheck, adminRouter, (req, res) => {
+  res.json({
+    message: 'You have accessed the protected endpoint!',
+    yourUserInfo: req.user
+  });
+});
 server.use('/problems', problemRouter);
 server.use('/auth', authRouter);
 server.get('/', (req, res) => {
