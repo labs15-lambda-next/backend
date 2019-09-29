@@ -42,7 +42,7 @@ function add(admin) {
   return db('admin').insert(admin, 'id');
 }
 
-function approveProblem(id,problem) {
-  console.log('admin model prboel', problem)
-  return db('problems').where({id}).update({isApproved:problem})
+function approveProblem(id, problem) {
+  console.log('admin model prboel', problem);
+  return db('problems').where({ id }).update({ isApproved: problem });
 }
