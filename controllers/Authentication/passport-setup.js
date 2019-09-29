@@ -1,7 +1,5 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-// const jwt = require('jsonwebtoken');
-// const secrets = require('../../config/secrets.js');
 const Admins = require('../../models/admin-model');
 
 passport.serializeUser((user, done) => {
@@ -29,11 +27,27 @@ passport.use(
 
 const verifyGoogleUser = async (obj, done) => {
   const { profile, token } = obj;
+
+  // try {
+  //   if (!profile.emails[0].value || profile.emails[0].value !== 'lambdaschool.com' || !profile.emails[0].value !== 'labs15teamnext@gmail.com') {
+  //     return done(null, false, { message: 'not allowed to access' });
+  //   }
+  // } catch (err) {
+  //   console.log(err);
+  // }
   const user = await Admins.getByEmail(profile.emails[0].value).catch((err) => console.error(err));
   // const clientToken = generateToken(user);
   // console.log('clientToken', clientToken);
+  // console.log('user.email ps', user.email);
+  // const clientDomain = '@lambdaschool.com';
+  // const domain = user.substr(profile.emails.length - clientDomain.length);
+  console.log('profile json email', profile.emails[0].value);
+  console.log('CLG THE F USER', user);
   try {
-    if (!user) {
+    if (!profile._json.domain || profile.emails[0].value !== 'labs15teamnext@gmail.com') {
+      done(null, false, { message: 'Only Lambda Staff are allowed to access' });
+    } if (!user || !user.email) {
+      console.log('CLG FN USER.EMAIL', user.email);
       const [id] = await Admins.add({
         email: profile.emails[0].value,
         google_id: profile.id,
@@ -46,17 +60,3 @@ const verifyGoogleUser = async (obj, done) => {
     console.error(err);
   }
 };
-// function generateToken(admin) {
-//   console.log('clg admin id', admin.id);
-//   console.log('admin email', admin.email);
-//   const payload = {
-//     subject: admin.id || admin.google_id,
-//     email: admin.email
-//   };
-
-//   const options = {
-//     expiresIn: '1d'
-//   };
-
-//   return jwt.sign(payload, secrets.jwtSecret, options);
-// }
