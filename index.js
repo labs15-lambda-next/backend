@@ -6,17 +6,18 @@ const helmet = require('helmet');
 const chalk = require('chalk').default;
 const passport = require('passport');
 const passportSetup = require('./controllers/Authentication/passport-setup');
-// const authCheck = require('./controllers/Authentication/authCheck');
+const authCheck = require('./controllers/Authentication/authCheck');
 
 const server = express();
-// const cookieSession = require('cookie-session');
+const cookieSession = require('cookie-session');
 // middleware
-// const corsOptions = {
-//   origin: process.env.FRONTEND_URL,
-//   credentials: true,
-// };
+const corsOptions = {
+  origin: ['http://localhost:3000', 'https://www.lambdaschoolnext.com', 'https://lambdschoolanext.netlify.com'],
+  credentials: true,
+  AccessControlAllowOrigin: ['http://localhost:3000', 'https://www.lambdaschoolnext.com', 'https://lambdschoolanext.netlify.com']
+};
 
-/* server.use(
+server.use(
   cookieSession({
     name: 'cookie',
     maxAge: 24 * 60 * 60 * 1000,
@@ -25,10 +26,10 @@ const server = express();
     // httpOnly: true,
     signed: true,
   })
-); */
+);
 server.use(express.json());
 server.use(helmet());
-server.use(cors());
+server.use(cors(corsOptions));
 // initialize passport
 server.use(passport.initialize());
 server.use(passport.session());
@@ -39,9 +40,20 @@ const authRouter = require('./controllers/Authentication/Authentication');
 const adminRouter = require('./controllers/admin-routes');
 
 server.use('/users', usersRouter);
-server.use('/admin', adminRouter);
+server.use('/admin', authCheck, adminRouter, (req, res) => {
+  res.json({
+    message: 'You have accessed the protected endpoint!',
+    yourUserInfo: req.user
+  });
+});
 server.use('/problems', problemRouter);
 server.use('/auth', authRouter);
+server.use('/logout', (req, res) => {
+  // Destroy the session if any
+  req.logOut();
+  // Redirect to homepage
+  res.status(400).redirect(`${process.env.FRONTEND_URL}`);
+});
 server.get('/', (req, res) => {
   try {
     res.status(200).json({ message: 'Root endpoint is functional.' });
