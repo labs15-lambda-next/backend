@@ -12,9 +12,9 @@ const server = express();
 const cookieSession = require('cookie-session');
 // middleware
 const corsOptions = {
-  origin: ['http://localhost:3000', 'https://lambdaschoolnext.com', 'https://lambdschoolanext.netlify.com'],
+  origin: ['http://localhost:3000', 'https://www.lambdaschoolnext.com/', 'https://lambdschoolanext.netlify.com/'],
   credentials: true,
-  AccessControlAllowOrigin: ['http://localhost:3000', 'https://lambdaschoolnext.com', 'https://lambdschoolanext.netlify.com']
+  AccessControlAllowOrigin: ['http://localhost:3000', 'https://www.lambdaschoolnext.com/', 'https://lambdschoolanext.netlify.com/']
 };
 
 server.use(
