@@ -41,13 +41,15 @@ const verifyGoogleUser = async (obj, done) => {
   // console.log('user.email ps', user.email);
   // const clientDomain = '@lambdaschool.com';
   // const domain = user.substr(profile.emails.length - clientDomain.length);
-  console.log('profile json email', profile.emails[0].value);
-  console.log('CLG THE F USER', user);
+  // console.log('profile json email', profile.emails[0].value);
+  // console.log('CLG THE F USER', user);
+
+  // if (!profile._json.domain || profile.emails[0].value !== 'labs15teamnext@gmail.com') {
+  //   done(null, false, { message: 'Not allow access!' });
+  // }
   try {
-    if (!profile._json.domain || profile.emails[0].value !== 'labs15teamnext@gmail.com') {
-      done(null, false, { message: 'Only Lambda Staff are allowed to access' });
-    } if (!user || !user.email) {
-      console.log('CLG FN USER.EMAIL', user.email);
+    if (!user) {
+      // console.log('CLG FN USER.EMAIL', user.email);
       const [id] = await Admins.add({
         email: profile.emails[0].value,
         google_id: profile.id,
