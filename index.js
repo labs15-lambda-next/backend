@@ -47,6 +47,10 @@ server.use('/admin', authCheck, adminRouter, (req, res) => {
 });
 server.use('/problems', problemRouter);
 server.use('/auth', authRouter);
+server.use('/logout', (req, res) => {
+  req.logOut();
+  res.status(400).redirect(`${process.env.FRONTEND_URL}`);
+});
 server.get('/', (req, res) => {
   try {
     res.status(200).json({ message: 'Root endpoint is functional.' });

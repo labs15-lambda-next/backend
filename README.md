@@ -14,20 +14,21 @@ To get the server running locally:
 
 ### Express JS
 
-🚫 Why did you choose this framework?
+Why did you choose this framework?
 
 - Based off experience alone and also fits perfectly for the project.
 - Easy Scalability
 - Express makes it easier by having to write less code vs using only node.
 - Clear documentation
 
-## 2️⃣ Endpoints
+## Endpoints
 
 #### Admin Routes
 
 | Method | Endpoint                  | Access Control | Description                                           |
 | ------ | ------------------------- | -------------- | ----------------------------------------------------- |
 | GET    | `/admin/all`              | admins         | Returns the information for all problems.             |
+| GET    | `/logout`              | admins         | Logs out the admin             |
 | PUT    | `/admin/all/:id`          | admins         | Modify an existing problem by approving/declining it. |
 | PUT    | `/admin/all/problems/:id` | ADMIN          | Admins can edit the problem in their view.            |
 | DELETE | `/admin/all/:id`          | admins         | Delete a problem.                                     |
