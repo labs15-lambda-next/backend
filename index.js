@@ -12,7 +12,7 @@ const server = express();
 const cookieSession = require('cookie-session');
 // middleware
 const corsOptions = {
-  origin: process.env.FRONTEND_URL,
+  origin: ['http://localhost:3000', 'https://lambdaschoolnext.com'],
   credentials: true,
 };
 
@@ -48,7 +48,9 @@ server.use('/admin', authCheck, adminRouter, (req, res) => {
 server.use('/problems', problemRouter);
 server.use('/auth', authRouter);
 server.use('/logout', (req, res) => {
+  // Destroy the session if any
   req.logOut();
+  // Redirect to homepage
   res.status(400).redirect(`${process.env.FRONTEND_URL}`);
 });
 server.get('/', (req, res) => {
