@@ -10,3 +10,23 @@ function authCheck(req, res, next) {
     next();
   }
 }
+
+// PSUEDO - implement later for profile
+// router.post("/authcheck",() => {
+//   return res.json({isloggedIn:req.isAuthenticated()})
+// })
+// router.post("/me",(req,res) => {
+//   if(req.isAuthenticated()){
+//     res.json({me:req.user})
+//   } else {
+//     res.json({me:null})
+//   }
+// })
+// psuedo implement on the fe to check if user auth
+// axios.post("/authcheck").then((res) => {
+// if(res.data.isloggedIn){
+//   render <Component>
+// } else {
+
+// }
+// })
