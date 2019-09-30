@@ -12,8 +12,9 @@ const server = express();
 const cookieSession = require('cookie-session');
 // middleware
 const corsOptions = {
-  origin: process.env.FRONTEND_URL,
+  origin: ['http://localhost:3000', 'https://www.lambdaschoolnext.com', 'https://lambdschoolanext.netlify.com'],
   credentials: true,
+  AccessControlAllowOrigin: ['http://localhost:3000', 'https://www.lambdaschoolnext.com', 'https://lambdschoolanext.netlify.com']
 };
 
 server.use(
@@ -47,6 +48,12 @@ server.use('/admin', authCheck, adminRouter, (req, res) => {
 });
 server.use('/problems', problemRouter);
 server.use('/auth', authRouter);
+server.use('/logout', (req, res) => {
+  // Destroy the session if any
+  req.logOut();
+  // Redirect to homepage
+  res.status(400).redirect(`${process.env.FRONTEND_URL}`);
+});
 server.get('/', (req, res) => {
   try {
     res.status(200).json({ message: 'Root endpoint is functional.' });
